@@ -34,6 +34,7 @@ Q = -10 × log₁₀(P)
 Where `P` is the probability that the base call is incorrect.
 
 ### Common Encoding Schemes
+FASTQ files combine nucleotide sequences and corresponding quality scores. Each quality score is `Phred-scaled`, meaning it’s a logarithmic measure of the probability that a base was called incorrectly. To store these scores efficiently in text format, they are encoded as `ASCII characters`, and different sequencing platforms (and versions) have used different encoding schemes.
 
 | Encoding             | ASCII Range | Phred Score Range | Offset |
 | -------------------- | ----------- | ----------------- | ------ |
@@ -105,18 +106,18 @@ Corresponding reads maintain identical identifiers, often with `/1` and `/2` suf
 
 ## Technical Considerations
 
-### Memory Management
-Large FASTQ files require efficient processing strategies:
-- Stream-based processing for memory efficiency
-- Parallel processing for performance optimization
-- Chunked analysis for very large datasets
+### Memory Management  
+Large FASTQ files require efficient processing strategies:  
+- Stream-based processing for memory efficiency  
+- Parallel processing for performance optimization  
+- Chunked analysis for very large datasets  
 
-### Format Validation
-Key validation checks include:
-- Consistent 4-line record structure
-- Valid nucleotide characters (A, T, G, C, N)
-- Matching sequence and quality string lengths
-- Proper ASCII encoding ranges
+### Format Validation  
+Key validation checks include:  
+- Consistent 4-line record structure  
+- Valid nucleotide characters (A, T, G, C, N)  
+- Matching sequence and quality string lengths  
+- Proper ASCII encoding ranges  
 
 ## Related Formats
 
