@@ -2,11 +2,11 @@
 
 ## Overview
 
-Trimmomatic is a comprehensive read trimming tool for Illumina NGS data that implements flexible quality-based trimming algorithms. The software performs sequence quality assessment and trimming operations through a modular pipeline architecture, enabling researchers to remove low-quality bases, adapter sequences, and other artifacts that could compromise downstream analysis accuracy.
+`Trimmomatic` is a comprehensive read trimming tool for Illumina NGS data that implements flexible quality-based trimming algorithms. The software performs sequence quality assessment and trimming operations through a modular pipeline architecture, enabling researchers to remove low-quality bases, adapter sequences, and other artifacts that could compromise downstream analysis accuracy.
 
 ## Principle of Operation
 
-Trimmomatic operates through a multi-step processing pipeline where each trimming operation is implemented as a discrete module. The tool processes reads sequentially through user-defined trimming steps, applying quality-based filtering and trimming algorithms to maximize both read quality and retention rates.
+`Trimmomatic` operates through a multi-step processing pipeline where each trimming operation is implemented as a discrete module. The tool processes reads sequentially through user-defined trimming steps, applying quality-based filtering and trimming algorithms to maximize both read quality and retention rates.
 
 ### Core Methodology
 
@@ -97,7 +97,7 @@ Terminal base removal based on quality thresholds:
 
 ### MINLEN
 
-Length-based filtering:
+Length-based filtering:  
 - **Minimum Length**: Shortest acceptable read length post-trimming  
 - **Read Retention**: Ensures reads maintain sufficient length for alignment  
 
@@ -278,6 +278,53 @@ java -jar trimmomatic-0.39.jar PE -phred33 \
 fastqc -o $FASTQC_OUTPUT \
     ${TRIMMED_OUTPUT}${SAMPLE_PREFIX}_R1_paired.fastq.gz \
     ${TRIMMED_OUTPUT}${SAMPLE_PREFIX}_R2_paired.fastq.gz
+```
+
+### Batch Processing On a HPC Cluster
+
+```bash linenums="1"
+#!/bin/bash
+###################configuration slurm##############################
+#SBATCH -A invalbo
+#SBATCH --time=2-23:00:00
+#SBATCH --job-name=trim
+#SBATCH -p long
+#SBATCH -N 1
+#SBATCH -n 1
+#SBATCH --cpus-per-task 8
+#SBATCH --mem=16G
+#SBATCH --array 1-56
+#SBATCH -o Cluster_logs/%x-%j-%N.out
+#SBATCH -e Cluster_logs/%x-%j-%N.err
+#SBATCH --mail-user=loic.talignani@ird.fr
+#SBATCH --mail-type=FAIL
+####################################################################
+
+# Recover of fastq file name
+SAMPLE=$(sed -n "${SLURM_ARRAY_TASK_ID}p" info_files/fastq_files)
+
+# Create OUTPUT directory
+OUTPUT_FOLDER="results/01_Trimming"
+mkdir -p "$OUTPUT_FOLDER"
+
+# Create directory for log files
+LOG_FOLDER="results/11_Reports"
+mkdir -p "$LOG_FOLDER"
+
+module load trimmomatic/0.39 fastqc/0.12.1
+
+trimmomatic PE -threads 16 \
+    -phred33 -trimlog "$LOG_FOLDER/trimmomatic_${SAMPLE}.log" \
+    "raw/${SAMPLE}_R1.fastq.gz" \
+    "raw/${SAMPLE}_R2.fastq.gz" \
+    "$OUTPUT_FOLDER/${SAMPLE}_trimmomatic_R1.fastq.gz" \
+    "$OUTPUT_FOLDER/${SAMPLE}_trimmomatic_unpaired_R1.fastq.gz" \
+    "$OUTPUT_FOLDER/${SAMPLE}_trimmomatic_R2.fastq.gz" \
+    "$OUTPUT_FOLDER/${SAMPLE}_trimmomatic_unpaired_R2.fastq.gz" \
+    ILLUMINACLIP:resources/adapters/TruSeq2-PE.fa:2:30:15 LEADING:20 TRAILING:3 SLIDINGWINDOW:5:20 AVGQUAL:20 MINLEN:50
+
+fastqc --threads 16 -o qc/fastqc-post-trim/ "$OUTPUT_FOLDER/${SAMPLE}_trimmomatic_R1.fastq.gz"
+fastqc --threads 16 -o qc/fastqc-post-trim/ "$OUTPUT_FOLDER/${SAMPLE}_trimmomatic_R2.fastq.gz"
 ```
 
 ## Performance Considerations

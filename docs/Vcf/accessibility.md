@@ -108,23 +108,23 @@ echo "The script completed successfully in $((duration / 60)) minutes and $((dur
 ## Considerations and Limitations
 
 ### Data Loss
-Accessibility filtering removes variants from potentially important genomic regions, including:
-- Regulatory elements in heterochromatin
-- Structural variant breakpoints
-- Copy number variable regions
+Accessibility filtering removes variants from potentially important genomic regions, including:  
+- Regulatory elements in heterochromatin  
+- Structural variant breakpoints  
+- Copy number variable regions  
 
 ### Mask Selection
-The choice of accessibility mask significantly impacts results and should be:
-- **Species-specific**: Tailored to the organism's genome characteristics
-- **Technology-appropriate**: Matched to the sequencing platform and read length
-- **Analysis-specific**: Customized for the research question and population studied
+The choice of accessibility mask significantly impacts results and should be:  
+- **Species-specific**: Tailored to the organism's genome characteristics  
+- **Technology-appropriate**: Matched to the sequencing platform and read length  
+- **Analysis-specific**: Customized for the research question and population studied  
 
 ## Best Practices
 
-1. **Document mask provenance**: Clearly record the source and generation method of accessibility masks
-2. **Validate filtering impact**: Assess the proportion of variants retained and their genomic distribution
-3. **Consider analysis goals**: Balance between data quality and genomic coverage based on research objectives
-4. **Benchmark performance**: Compare results with and without accessibility filtering to understand the impact
+1. **Document mask provenance**: Clearly record the source and generation method of accessibility masks  
+2. **Validate filtering impact**: Assess the proportion of variants retained and their genomic distribution  
+3. **Consider analysis goals**: Balance between data quality and genomic coverage based on research objectives  
+4. **Benchmark performance**: Compare results with and without accessibility filtering to understand the impact  
 
 ## Conclusion
 

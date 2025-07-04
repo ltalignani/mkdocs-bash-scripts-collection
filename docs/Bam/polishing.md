@@ -78,10 +78,10 @@ EOF
 done
 ```
 
-This script:
-- **Iterates** over all *marked.bam files
-- **Runs** samtools calmd to fix NM/MD tags
-- **Writes** a .nm.bam output file and logs errors
+This script:  
+- **Iterates** over all *marked.bam files  
+- **Runs** samtools calmd to fix NM/MD tags  
+- **Writes** a .nm.bam output file and logs errors  
 
 
 

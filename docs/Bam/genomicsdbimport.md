@@ -111,10 +111,10 @@ sample3    /path/to/sample3.g.vcf.gz
 - **Temporary storage**: Adequate `/tmp` space is essential for intermediate files
 
 #### Chromosomal Parallelization
-The script utilizes SLURM job arrays to process chromosomes in parallel:
-- **Scalability**: Each chromosome processed independently
-- **Resource optimization**: Parallel processing reduces total runtime
-- **Memory efficiency**: Per-chromosome processing reduces memory requirements
+The script utilizes SLURM job arrays to process chromosomes in parallel:  
+- **Scalability**: Each chromosome processed independently  
+- **Resource optimization**: Parallel processing reduces total runtime  
+- **Memory efficiency**: Per-chromosome processing reduces memory requirements  
 
 ## GenotypeGVCFs: Joint Genotyping
 

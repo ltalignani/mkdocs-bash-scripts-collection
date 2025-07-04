@@ -119,7 +119,7 @@ Key validation checks include:
 - Matching sequence and quality string lengths  
 - Proper ASCII encoding ranges  
 
-## Related Formats
+## Related Formats  
 
 - **FASTA**: Sequence-only format without quality scores
 - **SAM/BAM**: Aligned sequence format with additional mapping information

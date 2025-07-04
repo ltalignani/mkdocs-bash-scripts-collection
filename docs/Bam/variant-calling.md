@@ -12,11 +12,11 @@ The Genome Analysis Toolkit (GATK) HaplotypeCaller is currently the gold standar
 
 ### Key Features
 
-HaplotypeCaller employs a local de novo assembly approach that:
-- Identifies active regions where variation is likely to occur
-- Assembles possible haplotypes in these regions
-- Realigns reads to the most likely haplotypes
-- Calls variants based on the assembled haplotypes
+HaplotypeCaller employs a local de novo assembly approach that:  
+- Identifies active regions where variation is likely to occur  
+- Assembles possible haplotypes in these regions  
+- Realigns reads to the most likely haplotypes  
+- Calls variants based on the assembled haplotypes  
 
 This methodology provides superior accuracy compared to position-based callers, especially for indels and complex variants.
 

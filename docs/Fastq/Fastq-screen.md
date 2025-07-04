@@ -1,12 +1,13 @@
-# FastQ Screen
+# Fastq Contamination Chacking With Fastq-Screen
+![Fastq-screen logo](../assets/FQS_logo.png)
 
 ## Overview
 
-FastQ Screen is a quality control tool designed to screen libraries of short reads in FastQ format against a set of reference databases. The primary purpose of this tool is to identify potential contamination sources and assess the composition of sequencing libraries by aligning reads against multiple reference genomes or databases simultaneously.
+`Fastq-screen` is a quality control tool designed to screen libraries of short reads in Fastq format against a set of reference databases. The primary purpose of this tool is to identify potential contamination sources and assess the composition of sequencing libraries by aligning reads against multiple reference genomes or databases simultaneously.
 
 ## Principle of Operation
 
-FastQ Screen operates by taking a subset of reads from input FastQ files and aligning them against user-defined reference databases using fast alignment algorithms. The tool provides quantitative assessment of how many reads align to each reference database, enabling researchers to identify potential contamination, confirm the expected organism composition, and detect unexpected sequences in their datasets.
+`Fastq-screen` operates by taking a subset of reads from input Fastq files and aligning them against user-defined reference databases using fast alignment algorithms. The tool provides quantitative assessment of how many reads align to each reference database, enabling researchers to identify potential contamination, confirm the expected organism composition, and detect unexpected sequences in their datasets.
 
 ### Core Methodology
 
@@ -152,42 +153,42 @@ FastQ Screen integrates effectively with:
 ### Basic Commands
 
 #### Standard Single-End Screening
-```bash
+```bash linenums="1"
 fastq_screen --conf /path/to/fastq_screen.conf sample.fastq.gz
 ```
 
 #### Paired-End Screening
-```bash
+```bash linenums="1"
 fastq_screen --conf /path/to/fastq_screen.conf sample_R1.fastq.gz sample_R2.fastq.gz
 ```
 
 #### Multiple File Processing
-```bash
+```bash linenums="1"
 fastq_screen --conf /path/to/fastq_screen.conf *.fastq.gz
 ```
 
 ### Advanced Usage Examples
 
 #### Custom Subset Size
-```bash
+```bash linenums="1"
 # Screen only the first 50,000 reads for faster processing
 fastq_screen --conf /path/to/fastq_screen.conf --subset 50000 sample.fastq.gz
 ```
 
 #### Multi-threading
-```bash
+```bash linenums="1"
 # Use 8 threads for parallel processing
 fastq_screen --conf /path/to/fastq_screen.conf --threads 8 sample.fastq.gz
 ```
 
 #### Output Directory Specification
-```bash
+```bash linenums="1"
 # Specify custom output directory
 fastq_screen --conf /path/to/fastq_screen.conf --outdir /path/to/results/ sample.fastq.gz
 ```
 
 #### Force Overwrite Existing Results
-```bash
+```bash linenums="1"
 # Overwrite existing output files
 fastq_screen --conf /path/to/fastq_screen.conf --force sample.fastq.gz
 ```
@@ -195,19 +196,19 @@ fastq_screen --conf /path/to/fastq_screen.conf --force sample.fastq.gz
 ### Specialized Screening Options
 
 #### Tag-based Output
-```bash
+```bash linenums="1"
 # Add custom tag to output files
 fastq_screen --conf /path/to/fastq_screen.conf --tag custom_label sample.fastq.gz
 ```
 
 #### Aligner Selection
-```bash
+```bash linenums="1"
 # Use BWA instead of default Bowtie2
 fastq_screen --conf /path/to/fastq_screen.conf --aligner bwa sample.fastq.gz
 ```
 
 #### Quiet Mode
-```bash
+```bash linenums="1"
 # Suppress standard output messages
 fastq_screen --conf /path/to/fastq_screen.conf --quiet sample.fastq.gz
 ```
@@ -215,7 +216,7 @@ fastq_screen --conf /path/to/fastq_screen.conf --quiet sample.fastq.gz
 ### Configuration File Examples
 
 #### Basic Configuration Structure
-```bash
+```bash linenums="1"
 # Example fastq_screen.conf file content
 DATABASE    Human    /path/to/human_genome/human_index    bowtie2
 DATABASE    Mouse    /path/to/mouse_genome/mouse_index    bowtie2
@@ -226,7 +227,7 @@ DATABASE    Adapters /path/to/adapters/adapter_index     bowtie2
 ```
 
 #### Advanced Configuration with Custom Parameters
-```bash
+```bash linenums="1"
 # Configuration with custom bowtie2 parameters
 DATABASE    Human    /path/to/human_genome/human_index    bowtie2    --very-sensitive --end-to-end
 DATABASE    Bacteria /path/to/bacteria_db/bacteria_index bowtie2    --local --very-fast
@@ -235,7 +236,8 @@ DATABASE    Bacteria /path/to/bacteria_db/bacteria_index bowtie2    --local --ve
 ### Batch Processing Scripts
 
 #### Shell Script for Multiple Samples
-```bash
+
+```bash linenums="1"
 #!/bin/bash
 # Batch processing script
 CONF_FILE="/path/to/fastq_screen.conf"
@@ -249,7 +251,7 @@ done
 ```
 
 #### Paired-End Batch Processing
-```bash
+```bash linenums="1"
 #!/bin/bash
 # Process paired-end files
 CONF_FILE="/path/to/fastq_screen.conf"
@@ -262,17 +264,57 @@ for r1_file in ${INPUT_DIR}*_R1.fastq.gz; do
 done
 ```
 
+### Fastq-screen on a HPC Cluster
+
+```bash linenums="1"
+#!/bin/bash
+###################configuration slurm##############################
+#SBATCH -A invalbo
+#SBATCH --time=2-23:00:00
+#SBATCH --job-name=fastqscreen  
+#SBATCH -p fast
+#SBATCH -N 1
+#SBATCH -n 1
+#SBATCH --cpus-per-task 8
+#SBATCH --mem=24G
+#SBATCH --array 1-22
+#SBATCH -o Cluster_logs/%x-%j-%N.out
+#SBATCH -e Cluster_logs/%x-%j-%N.err
+#SBATCH --mail-user=loic.talignani@ird.fr
+#SBATCH --mail-type=FAIL
+####################################################################
+
+# Recover of fastq file name
+SAMPLELANE=$(sed -n "${SLURM_ARRAY_TASK_ID}p" info_files/fastq_files)
+
+# Locate INPUT directory 
+INPUT_FOLDER="raw"
+
+LOG_FOLDER="results/11_Reports/fastq-screen"
+
+module load fastq-screen/0.15.3 bwa/0.7.17
+
+fastq_screen -q --threads 8 \
+            --conf info_files/fastq-screen.conf \
+            --aligner bwa \
+            --subset 1000 \
+            --outdir qc/fastq-screen/ \
+            ${INPUT_FOLDER}/*.fastq.gz \
+            &> ${LOG_FOLDER}/${SAMPLELANE}-fastq-screen.log
+```
+
+
 ### Integration with Quality Control Pipelines
 
 #### Combined with FastQC
-```bash
+```bash linenums="1"
 # Run FastQC and FastQ Screen sequentially
 fastqc sample.fastq.gz
 fastq_screen --conf /path/to/fastq_screen.conf sample.fastq.gz
 ```
 
 #### Integration with MultiQC
-```bash
+```bash linenums="1"
 # Generate FastQ Screen reports for MultiQC compilation
 fastq_screen --conf /path/to/fastq_screen.conf *.fastq.gz
 multiqc .
@@ -281,19 +323,19 @@ multiqc .
 ### Troubleshooting Commands
 
 #### Test Configuration
-```bash
+```bash linenums="1"
 # Test configuration file validity
 fastq_screen --conf /path/to/fastq_screen.conf --help
 ```
 
 #### Verbose Output for Debugging
-```bash
+```bash linenums="1"
 # Enable verbose output for troubleshooting
 fastq_screen --conf /path/to/fastq_screen.conf --verbose sample.fastq.gz
 ```
 
 #### Version Information
-```bash
+```bash linenums="1"
 # Check FastQ Screen version
 fastq_screen --version
 ```

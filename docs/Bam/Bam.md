@@ -89,10 +89,10 @@ The CIGAR string describes the alignment between query and reference sequences u
 
 ## Quality Scores
 
-Base quality scores in BAM files follow the Phred scale encoding:
-- ASCII values represent quality scores with an offset of 33
-- Quality score Q relates to error probability P: Q = -10 × log₁₀(P)
-- Higher scores indicate greater confidence in base calls
+Base quality scores in BAM files follow the Phred scale encoding:  
+- ASCII values represent quality scores with an offset of 33  
+- Quality score Q relates to error probability P: Q = -10 × log₁₀(P)  
+- Higher scores indicate greater confidence in base calls  
 
 ## Indexing and Random Access
 

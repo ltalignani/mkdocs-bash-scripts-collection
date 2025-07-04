@@ -1,4 +1,4 @@
-# FastQC
+# Fastq Quality Control With FastQC
 
 ## Overview
 

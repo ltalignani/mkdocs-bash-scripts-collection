@@ -2,7 +2,7 @@
 
 ## Context: Post-Variant Calling Quality Control
 
-This filtering step is particularly relevant in the context of post-variant calling quality control, especially when variants have been called using legacy tools such as GATK's UnifiedGenotyper. While modern variant callers like HaplotypeCaller incorporate sophisticated algorithms that better handle problematic genomic regions including homopolymer runs during the variant calling process, UnifiedGenotyper produces inferior results for indel calling compared to HaplotypeCaller, necessitating additional post-processing steps for homopolymer-associated variants.
+This filtering step is particularly relevant in the context of post-variant calling quality control, especially when variants have been called using `legacy tools such as GATK's UnifiedGenotyper`. While modern variant callers like HaplotypeCaller incorporate sophisticated algorithms that better handle problematic genomic regions including homopolymer runs during the variant calling process, UnifiedGenotyper produces inferior results for indel calling compared to HaplotypeCaller, necessitating additional post-processing steps for homopolymer-associated variants.
 
 ## Understanding Homopolymer Runs
 
@@ -26,27 +26,27 @@ Variant:   ATCG[AAAA]TGCAT    (deletion of one A)
 
 ### Sequencing Technology Limitations
 
-**Illumina Sequencing Issues:**
-- **Phasing errors**: Synchronization loss during sequencing-by-synthesis
-- **Signal intensity variations**: Difficulty in accurately measuring fluorescent signals
-- **Cluster density effects**: Overlapping signals from adjacent clusters
+**Illumina Sequencing Issues:**  
+- **Phasing errors**: Synchronization loss during sequencing-by-synthesis  
+- **Signal intensity variations**: Difficulty in accurately measuring fluorescent signals  
+- **Cluster density effects**: Overlapping signals from adjacent clusters  
 
-**Ion Torrent Specific Problems:**
-- **Homopolymer length miscalls**: Inherent limitation of pH-based detection
-- **Systematic length bias**: Tendency to under-call or over-call homopolymer lengths
-- **Flow signal saturation**: Signal plateau effects in long homopolymer runs
+**Ion Torrent Specific Problems:**  
+- **Homopolymer length miscalls**: Inherent limitation of pH-based detection  
+- **Systematic length bias**: Tendency to under-call or over-call homopolymer lengths  
+- **Flow signal saturation**: Signal plateau effects in long homopolymer runs  
 
 ### Bioinformatics Challenges
 
-**Alignment Artifacts:**
-- **Mapping ambiguity**: Multiple valid alignments for reads spanning homopolymer regions
-- **Indel calling errors**: Misinterpretation of sequencing errors as true variants
-- **Strand bias**: Asymmetric representation of variants on forward and reverse strands
+**Alignment Artifacts:**  
+- **Mapping ambiguity**: Multiple valid alignments for reads spanning homopolymer regions  
+- **Indel calling errors**: Misinterpretation of sequencing errors as true variants  
+- **Strand bias**: Asymmetric representation of variants on forward and reverse strands  
 
-**Variant Calling Complications:**
-- **False positive indels**: Sequencing errors interpreted as genuine insertions/deletions
-- **Allelic imbalance**: Preferential amplification of certain alleles
-- **Genotyping errors**: Incorrect assignment of homozygous vs. heterozygous states
+**Variant Calling Complications:**  
+- **False positive indels**: Sequencing errors interpreted as genuine insertions/deletions  
+- **Allelic imbalance**: Preferential amplification of certain alleles  
+- **Genotyping errors**: Incorrect assignment of homozygous vs. heterozygous states  
 
 ## Rationale for Homopolymer Run Filtering
 
@@ -61,15 +61,15 @@ The removal of variants in homopolymer runs is justified by several factors:
 
 ### Impact on Variant Interpretation
 
-**Clinical Implications:**
-- **Diagnostic accuracy**: Reduced false positive rates in medical genetic testing
-- **Treatment decisions**: More reliable variant classification for therapeutic targeting
-- **Genetic counseling**: Improved confidence in variant pathogenicity assessment
+**Clinical Implications:**  
+- **Diagnostic accuracy**: Reduced false positive rates in medical genetic testing  
+- **Treatment decisions**: More reliable variant classification for therapeutic targeting  
+- **Genetic counseling**: Improved confidence in variant pathogenicity assessment  
 
-**Research Applications:**
-- **Population genetics**: Cleaner datasets for demographic inference
-- **Genome-wide association studies**: Reduced noise in association testing
-- **Evolutionary genomics**: More accurate phylogenetic reconstructions
+**Research Applications:**  
+- **Population genetics**: Cleaner datasets for demographic inference  
+- **Genome-wide association studies**: Reduced noise in association testing  
+- **Evolutionary genomics**: More accurate phylogenetic reconstructions  
 
 ## Implementation Workflow
 
@@ -124,25 +124,25 @@ echo "The script completed successfully in $((duration / 60)) minutes and $((dur
 
 ### GATK VariantAnnotator Parameters
 
-**Core Arguments:**
-- `-T VariantAnnotator`: Specifies the GATK tool for adding annotations to variants
-- `-V`: Input VCF file path (already filtered by accessibility)
-- `-R`: Reference genome file in FASTA format
-- `-A HomopolymerRun`: Annotation module that identifies homopolymer contexts
-- `-o`: Output VCF file with homopolymer annotations
+**Core Arguments:**  
+- `-T VariantAnnotator`: Specifies the GATK tool for adding annotations to variants  
+- `-V`: Input VCF file path (already filtered by accessibility)  
+- `-R`: Reference genome file in FASTA format  
+- `-A HomopolymerRun`: Annotation module that identifies homopolymer contexts  
+- `-o`: Output VCF file with homopolymer annotations  
 
-**Resource Requirements:**
-- **Memory allocation**: 16GB to handle large VCF files and reference genome
-- **CPU utilization**: 8 cores for parallel processing
-- **Runtime**: Extended time allocation (11 days) for large-scale genomic data
+**Resource Requirements:**  
+- **Memory allocation**: 16GB to handle large VCF files and reference genome  
+- **CPU utilization**: 8 cores for parallel processing  
+- **Runtime**: Extended time allocation (11 days) for large-scale genomic data  
 
 ### HomopolymerRun Annotation
 
 The `HomopolymerRun` annotation adds the following information to the VCF INFO field:
 
-- **HRun**: Length of the longest homopolymer run in the variant context
-- **Context window**: Typically examines ±10 bases around the variant position
-- **Strand consideration**: Evaluates both forward and reverse strand contexts
+- **HRun**: Length of the longest homopolymer run in the variant context  
+- **Context window**: Typically examines ±10 bases around the variant position  
+- **Strand consideration**: Evaluates both forward and reverse strand contexts  
 
 ### Subsequent Filtering Steps
 
@@ -161,53 +161,53 @@ gatk VariantFiltration \
 
 ### Threshold Selection
 
-**Conservative Approach (HRun > 3):**
-- Removes most homopolymer-associated artifacts
-- Maintains high variant quality
-- May remove some true variants
+**Conservative Approach (HRun > 3):**  
+- Removes most homopolymer-associated artifacts  
+- Maintains high variant quality  
+- May remove some true variants  
 
-**Moderate Approach (HRun > 5):**
-- Balances quality and sensitivity
-- Suitable for most research applications
-- Commonly used in population studies
+**Moderate Approach (HRun > 5):**  
+- Balances quality and sensitivity  
+- Suitable for most research applications  
+- Commonly used in population studies  
 
-**Lenient Approach (HRun > 7):**
-- Retains more variants for analysis
-- Higher false positive rate
-- Requires additional quality control
+**Lenient Approach (HRun > 7):**  
+- Retains more variants for analysis  
+- Higher false positive rate  
+- Requires additional quality control  
 
 ### Validation Strategies
 
-1. **Sanger sequencing confirmation**: Validate a subset of filtered variants
-2. **Comparison with high-quality datasets**: Benchmark against reference populations
-3. **Technology-specific validation**: Use orthogonal sequencing platforms
-4. **Functional annotation**: Assess impact on protein-coding regions
+1. **Sanger sequencing confirmation**: Validate a subset of filtered variants  
+2. **Comparison with high-quality datasets**: Benchmark against reference populations  
+3. **Technology-specific validation**: Use orthogonal sequencing platforms  
+4. **Functional annotation**: Assess impact on protein-coding regions  
 
 ## Limitations and Considerations
 
 ### Potential Data Loss
 
-**Functional Impact:**
-- Removal of true variants in homopolymer regions
-- Loss of clinically relevant mutations
-- Reduced power for association studies
+**Functional Impact:**  
+- Removal of true variants in homopolymer regions  
+- Loss of clinically relevant mutations  
+- Reduced power for association studies  
 
-**Genomic Context:**
-- Regulatory elements within homopolymer tracts
-- Evolutionary important variations
-- Species-specific adaptation signals
+**Genomic Context:**  
+- Regulatory elements within homopolymer tracts  
+- Evolutionary important variations  
+- Species-specific adaptation signals  
 
 ### Alternative Approaches
 
-**Improved Sequencing Technologies:**
-- Long-read sequencing (PacBio, Oxford Nanopore)
-- Linked-read technologies (10x Genomics)
-- Hybrid assembly approaches
+**Improved Sequencing Technologies:**  
+- Long-read sequencing (PacBio, Oxford Nanopore)  
+- Linked-read technologies (10x Genomics)  
+- Hybrid assembly approaches  
 
-**Advanced Bioinformatics Methods:**
-- Machine learning-based variant calling
-- Consensus calling from multiple algorithms
-- Probabilistic models for homopolymer regions
+**Advanced Bioinformatics Methods:**  
+- Machine learning-based variant calling  
+- Consensus calling from multiple algorithms  
+- Probabilistic models for homopolymer regions  
 
 ## Conclusion
 

@@ -45,7 +45,7 @@ This script scans the raw/ directory for paired-end FASTQ files with names endin
 It extracts the sample names (removing the _1.fastq.gz suffix) and writes one sample name per line to the file info_files/fastq_files.list.
 
 
-### Mapping Reads On a Reference Genome with BWA-MEM on a SLURM Cluster (IFB)
+### Mapping Reads On a Reference Genome with BWA-MEM on a HPC Cluster
 
 #### Samples in a unique pair of Fastq files
 Here is a script used for the mapping of paired-end Fastq files from the mosquito *Anopheles gambiae*. Each sample is in a unique pair of Fastq files (`<samplename>_1|R1.fastq.gz; <samplename>_2|R2.fastq.gz`):

@@ -2,7 +2,7 @@
 
 ## Overview
 
-The AddOrReplaceReadGroups tool from the Picard toolkit is a critical utility for correcting or adding read group information to existing BAM files. This tool addresses scenarios where read group metadata is missing, incomplete, or incorrectly formatted, eliminating the need to perform computationally expensive re-mapping operations. Read groups are essential metadata components that enable proper sample identification, library tracking, and downstream analysis compatibility.
+The `AddOrReplaceReadGroups` tool from the Picard toolkit is a critical utility for correcting or adding read group information to existing BAM files. This tool addresses scenarios where read group metadata is missing, incomplete, or incorrectly formatted, eliminating the need to perform computationally expensive re-mapping operations. Read groups are essential metadata components that enable proper sample identification, library tracking, and downstream analysis compatibility.
 
 ## Read Group Metadata Significance
 
@@ -58,27 +58,27 @@ Additional metadata fields provide enhanced experimental context:
 
 ### Missing Read Groups
 
-Alignment software may generate BAM files without read group information, particularly when:
-- Command-line parameters omit read group specification
-- Legacy alignment tools lack read group support
-- Automated pipelines have configuration errors
-- Manual alignment processes skip metadata inclusion
+Alignment software may generate BAM files without read group information, particularly when:  
+- Command-line parameters omit read group specification  
+- Legacy alignment tools lack read group support  
+- Automated pipelines have configuration errors  
+- Manual alignment processes skip metadata inclusion  
 
 ### Incorrect Read Group Information
 
-Existing read groups may contain erroneous information due to:
-- Copy-paste errors in pipeline configuration
-- Inconsistent naming conventions across projects
-- Automated sample tracking system failures
-- Manual metadata entry mistakes
+Existing read groups may contain erroneous information due to:  
+- Copy-paste errors in pipeline configuration  
+- Inconsistent naming conventions across projects  
+- Automated sample tracking system failures  
+- Manual metadata entry mistakes  
 
 ### Incomplete Read Group Data
 
-Partial read group information may result from:
-- Minimal compliance with mandatory fields only
-- Missing platform-specific information
-- Absent library preparation details
-- Incomplete sample identification
+Partial read group information may result from:  
+- Minimal compliance with mandatory fields only  
+- Missing platform-specific information  
+- Absent library preparation details  
+- Incomplete sample identification  
 
 ## Tool Functionality
 
@@ -105,18 +105,18 @@ The tool implements a streamlined processing workflow:
 
 ### Memory Management
 
-Efficient memory utilization is crucial for processing large BAM files:
-- **Heap allocation**: JVM memory configuration for optimal performance
-- **Buffer management**: Efficient I/O buffering for large datasets
-- **Garbage collection**: Optimized memory cleanup for sustained processing
+Efficient memory utilization is crucial for processing large BAM files:  
+- **Heap allocation**: JVM memory configuration for optimal performance  
+- **Buffer management**: Efficient I/O buffering for large datasets  
+- **Garbage collection**: Optimized memory cleanup for sustained processing  
 
 ### Performance Considerations
 
-Several factors influence processing performance:
-- **Input file size**: Linear relationship between file size and processing time
-- **Compression level**: Trade-off between storage efficiency and processing speed
-- **I/O bandwidth**: Storage system performance impacts overall throughput
-- **CPU utilization**: Multi-threading capabilities for parallel processing
+Several factors influence processing performance:  
+- **Input file size**: Linear relationship between file size and processing time  
+- **Compression level**: Trade-off between storage efficiency and processing speed   
+- **I/O bandwidth**: Storage system performance impacts overall throughput  
+- **CPU utilization**: Multi-threading capabilities for parallel processing  
 
 ## Practical Implementation Example
 
@@ -183,21 +183,21 @@ picard AddOrReplaceReadGroups -Xmx128000m \
 
 ### Script Analysis
 
-**Resource Allocation:**
-- **Memory**: 128 GB allocation for large BAM file processing
-- **CPU**: 2 cores per task for I/O-intensive operations
-- **Time**: Extended processing window for comprehensive datasets
+**Resource Allocation:**  
+- **Memory**: 128 GB allocation for large BAM file processing  
+- **CPU**: 2 cores per task for I/O-intensive operations  
+- **Time**: Extended processing window for comprehensive datasets  
 
-**Metadata Extraction:**
-- **Dynamic parsing**: Extracts sample and lane information from filenames
-- **Flexible naming**: Supports complex filename conventions
-- **Validation**: Ensures proper identifier extraction
+**Metadata Extraction:**  
+- **Dynamic parsing**: Extracts sample and lane information from filenames  
+- **Flexible naming**: Supports complex filename conventions  
+- **Validation**: Ensures proper identifier extraction  
 
-**Read Group Assignment:**
-- **RGID**: Uses lane identifier for unique read group identification
-- **RGSM**: Assigns extracted sample name for proper sample tracking
-- **RGPL**: Specifies Illumina platform for technology identification
-- **RGLB/RGPU**: Uses standardized library and platform unit identifiers
+**Read Group Assignment:**  
+- **RGID**: Uses lane identifier for unique read group identification  
+- **RGSM**: Assigns extracted sample name for proper sample tracking  
+- **RGPL**: Specifies Illumina platform for technology identification  
+- **RGLB/RGPU**: Uses standardized library and platform unit identifiers  
 
 ## Alternative Approaches
 
@@ -213,50 +213,50 @@ samtools addreplacerg -r '@RG\tID:lane1\tSM:sample1\tLB:lib1\tPL:ILLUMINA' \
 
 ### Custom Solutions
 
-For specialized requirements, custom solutions may be necessary:
-- **Scripted approaches**: Shell scripts for batch processing
-- **Programming interfaces**: Python/R implementations for complex logic
-- **Database integration**: Automated metadata retrieval from LIMS systems
+For specialized requirements, custom solutions may be necessary:  
+- **Scripted approaches**: Shell scripts for batch processing  
+- **Programming interfaces**: Python/R implementations for complex logic  
+- **Database integration**: Automated metadata retrieval from LIMS systems  
 
 ## Quality Control and Validation
 
 ### Pre-Processing Checks
 
-Before executing read group correction:
-1. **File integrity**: Verify BAM file completeness and accessibility
-2. **Header analysis**: Examine existing read group information
-3. **Sample identification**: Confirm correct sample-to-file mapping
-4. **Metadata validation**: Verify accuracy of proposed read group information
+Before executing read group correction:  
+1. **File integrity**: Verify BAM file completeness and accessibility  
+2. **Header analysis**: Examine existing read group information  
+3. **Sample identification**: Confirm correct sample-to-file mapping  
+4. **Metadata validation**: Verify accuracy of proposed read group information  
 
 ### Post-Processing Validation
 
-After read group correction:
-1. **Header verification**: Confirm proper read group header integration
-2. **Record consistency**: Validate read group tag application to all records
-3. **File integrity**: Ensure output file completeness and accessibility
-4. **Downstream compatibility**: Test compatibility with analysis tools
+After read group correction:  
+1. **Header verification**: Confirm proper read group header integration  
+2. **Record consistency**: Validate read group tag application to all records  
+3. **File integrity**: Ensure output file completeness and accessibility  
+4. **Downstream compatibility**: Test compatibility with analysis tools  
 
 ### Error Detection
 
-Common error patterns and detection strategies:
-- **Missing fields**: Automated detection of incomplete read group information
-- **Inconsistent naming**: Validation of naming convention adherence
-- **Duplicate identifiers**: Detection of non-unique read group identifiers
-- **Platform mismatches**: Verification of platform-specific information
+Common error patterns and detection strategies:  
+- **Missing fields**: Automated detection of incomplete read group information  
+- **Inconsistent naming**: Validation of naming convention adherence  
+- **Duplicate identifiers**: Detection of non-unique read group identifiers  
+- **Platform mismatches**: Verification of platform-specific information  
 
 ## Integration with Analysis Pipelines
 
 ### Workflow Positioning
 
-Read group correction typically occurs between alignment and variant calling:
-1. **Raw sequencing data**: FASTQ files from sequencing platforms
-2. **Read alignment**: Generation of initial BAM files
-3. **Quality control**: Assessment of alignment quality
-4. **Sorting**: Coordinate-based organization of alignments
-5. **Read group correction**: Addition or correction of metadata ← *Current process*
-6. **Duplicate marking**: Identification of PCR duplicates
-7. **Base quality recalibration**: Adjustment of quality scores
-8. **Variant calling**: Identification of genomic variants
+Read group correction typically occurs between alignment and variant calling:  
+1. **Raw sequencing data**: FASTQ files from sequencing platforms  
+2. **Read alignment**: Generation of initial BAM files  
+3. **Quality control**: Assessment of alignment quality  
+4. **Sorting**: Coordinate-based organization of alignments  
+5. **Read group correction**: Addition or correction of metadata ← *Current process*  
+6. **Duplicate marking**: Identification of PCR duplicates  
+7. **Base quality recalibration**: Adjustment of quality scores  
+8. **Variant calling**: Identification of genomic variants  
 
 ### Automation Considerations
 

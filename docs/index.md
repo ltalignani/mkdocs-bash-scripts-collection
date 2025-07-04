@@ -5,8 +5,9 @@ This guide introduces:
 
 ## Fastq Files Treatment
 •	[The Fastq Format](Fastq/Fastq.md)  
+•	[Renaming FASTQ Files Downloaded from the Short Read Archive](Fastq/rename-fastq.md)  
 •	[Fastq Quality Control with FastQC](Fastq/FastQC.md)  
-•	[Fastq Contamination Checking with Fastq-screen](Fastq/Fast-screen.md)  
+•	[Fastq Contamination Checking with Fastq-screen](Fastq/Fastq-screen.md)  
 •	[Reads Trimming with Trimmomatic](Fastq/Trimming.md)   
 •	[Reads Mapping with BWA](Fastq/BWA.md)  
 
@@ -14,11 +15,11 @@ This guide introduces:
 •	[The SAM/BAM Format](Bam/Bam.md)  
 •	[Sorting a SAM/BAM File](Bam/sort-bam.md)  
 •	[How to Add or Replace ReadGroup](Bam/add-or-replace-read-groups.md)  
-•	[Deduplication](Bam/mark-duplicates.md)
+•	[Deduplication](Bam/mark-duplicates.md)  
 •	[Merge and deduplicate Bam Files](Bam/merge-and-mark-duplicates.md)  
-•	[Indel Realignment](Bam-indel-realignment.md)  
+•	[Indel Realignment](Bam/indel-realignment.md)  
 •	[Polishing Bam Files](Bam/polishing.md)    
-•	[Bam Quality Control](Bam/Bam-qc.md)  
+•	[Bam Quality Control](Bam/bam-qc.md)  
 •	[Variant-Calling](Bam/variant-calling.md)  
 •	[GenomicsDBImport and GenotypeGVCFs in GATK4 Workflow](Bam/genomicsdbimport.md)  
 

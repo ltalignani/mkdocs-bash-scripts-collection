@@ -8,24 +8,24 @@ SAM/BAM file sorting is a fundamental preprocessing step in genomic analysis pip
 
 ### Coordinate-Based Sorting
 
-Coordinate sorting arranges alignment records by their genomic position, following the order:
-1. **Reference sequence**: Sorted by reference sequence name (typically chromosomal order)
-2. **Position**: Sorted by leftmost mapping position (POS field)
-3. **Strand orientation**: Forward strand alignments before reverse strand at the same position
+Coordinate sorting arranges alignment records by their genomic position, following the order:  
+1. **Reference sequence**: Sorted by reference sequence name (typically chromosomal order)  
+2. **Position**: Sorted by leftmost mapping position (POS field)  
+3. **Strand orientation**: Forward strand alignments before reverse strand at the same position  
 
-This sorting order is mandatory for most downstream applications and enables:
-- Efficient variant calling algorithms
-- Proper mate-pair processing
-- Optimized coverage calculations
-- Compatible indexing with BAI/CSI formats
+This sorting order is mandatory for most downstream applications and enables:  
+- Efficient variant calling algorithms  
+- Proper mate-pair processing  
+- Optimized coverage calculations  
+- Compatible indexing with BAI/CSI formats  
 
 ### Query Name Sorting
 
-Query name sorting organizes records alphabetically by read identifier (QNAME field). This sorting strategy is particularly useful for:
-- Mate-pair analysis and validation
-- Duplicate detection algorithms
-- Quality control assessments
-- Conversion to FASTQ format
+Query name sorting organizes records alphabetically by read identifier (QNAME field). This sorting strategy is particularly useful for:  
+- Mate-pair analysis and validation  
+- Duplicate detection algorithms  
+- Quality control assessments  
+- Conversion to FASTQ format  
 
 ### Unsorted Files
 
@@ -35,17 +35,17 @@ Unsorted BAM files maintain the original alignment order, typically reflecting t
 
 ### Memory-Based Sorting
 
-Modern sorting implementations utilize in-memory algorithms for optimal performance:
-- **Quicksort variants**: Efficient for smaller datasets fitting in available RAM
-- **Merge sort**: Stable sorting with predictable O(n log n) performance
-- **Hybrid approaches**: Combine multiple algorithms based on data characteristics
+Modern sorting implementations utilize in-memory algorithms for optimal performance:  
+- **Quicksort variants**: Efficient for smaller datasets fitting in available RAM  
+- **Merge sort**: Stable sorting with predictable O(n log n) performance  
+- **Hybrid approaches**: Combine multiple algorithms based on data characteristics  
 
 ### External Sorting
 
-For datasets exceeding available memory, external sorting algorithms are employed:
-- **Multi-way merge**: Divides data into memory-sized chunks
-- **Temporary file management**: Utilizes disk storage for intermediate results
-- **I/O optimization**: Minimizes disk access through efficient buffering
+For datasets exceeding available memory, external sorting algorithms are employed:  
+- **Multi-way merge**: Divides data into memory-sized chunks  
+- **Temporary file management**: Utilizes disk storage for intermediate results  
+- **I/O optimization**: Minimizes disk access through efficient buffering  
 
 ## Implementation Tools
 
@@ -90,41 +90,41 @@ sort -k3,3V -k4,4n) | samtools view -b > output_sorted.bam
 
 ### Memory Requirements
 
-Memory allocation significantly impacts sorting performance:
-- **Minimum requirements**: 2-4 GB for typical whole-genome datasets
-- **Optimal allocation**: 8-16 GB enables in-memory sorting for most applications
-- **Memory scaling**: Linear relationship between file size and optimal memory allocation
+Memory allocation significantly impacts sorting performance:  
+- **Minimum requirements**: 2-4 GB for typical whole-genome datasets  
+- **Optimal allocation**: 8-16 GB enables in-memory sorting for most applications  
+- **Memory scaling**: Linear relationship between file size and optimal memory allocation  
 
 ### Parallelization
 
-Modern sorting implementations support parallel processing:
-- **Thread-level parallelism**: Multiple threads for concurrent sorting operations
-- **Process-level parallelism**: Independent sorting of file segments
-- **Distributed computing**: Cluster-based sorting for extremely large datasets
+Modern sorting implementations support parallel processing:  
+- **Thread-level parallelism**: Multiple threads for concurrent sorting operations  
+- **Process-level parallelism**: Independent sorting of file segments  
+- **Distributed computing**: Cluster-based sorting for extremely large datasets  
 
 ### Storage Considerations
 
-Temporary storage requirements during sorting:
-- **Disk space**: 2-3x input file size for intermediate files
-- **I/O bandwidth**: High-speed storage improves sorting performance
-- **Network considerations**: Minimize network I/O during sorting operations
+Temporary storage requirements during sorting:  
+- **Disk space**: 2-3x input file size for intermediate files  
+- **I/O bandwidth**: High-speed storage improves sorting performance  
+- **Network considerations**: Minimize network I/O during sorting operations  
 
 ## Quality Control and Validation
 
 ### Sort Order Verification
 
-Validation ensures proper sorting implementation:
-- **Coordinate validation**: Verify monotonic position ordering within chromosomes
-- **Reference sequence order**: Confirm proper chromosomal ordering
-- **Flag consistency**: Validate mate-pair relationships in coordinate-sorted files
+Validation ensures proper sorting implementation:  
+- **Coordinate validation**: Verify monotonic position ordering within chromosomes  
+- **Reference sequence order**: Confirm proper chromosomal ordering  
+- **Flag consistency**: Validate mate-pair relationships in coordinate-sorted files  
 
 ### Performance Monitoring
 
-Key metrics for sorting performance assessment:
-- **Processing time**: Total wall-clock time for sorting operation
-- **Memory utilization**: Peak and average memory usage
-- **I/O statistics**: Read/write operations and throughput
-- **Error rates**: Validation of sorting correctness
+Key metrics for sorting performance assessment:  
+- **Processing time**: Total wall-clock time for sorting operation  
+- **Memory utilization**: Peak and average memory usage  
+- **I/O statistics**: Read/write operations and throughput  
+- **Error rates**: Validation of sorting correctness  
 
 ## Practical Implementation Example
 
@@ -167,25 +167,25 @@ picard SortSam -Xmx40G \
 ### Script Components Analysis
 
 **Resource Allocation:**
-- **Memory**: 30 GB SLURM allocation with 40 GB JVM heap
-- **CPU**: 4 cores per task for parallel processing
-- **Time**: Extended 2-day limit for large datasets
+- **Memory**: 30 GB SLURM allocation with 40 GB Java Virtual Machine (JVM) heap  
+- **CPU**: 4 cores per task for parallel processing  
+- **Time**: Extended 2-day limit for large datasets  
 
 **Processing Parameters:**
-- **Sort Order**: Coordinate-based sorting for downstream compatibility
-- **Index Creation**: Automatic BAI index generation
-- **Memory Management**: 500,000 records in RAM for optimal performance
+- **Sort Order**: Coordinate-based sorting for downstream compatibility  
+- **Index Creation**: Automatic BAI index generation  
+- **Memory Management**: 500,000 records in RAM for optimal performance  
 
 **Array Processing:**
-- **Parallel Execution**: 56 simultaneous sorting jobs
-- **Sample Management**: Dynamic sample selection from input file
-- **Error Handling**: Comprehensive logging and email notifications
+- **Parallel Execution**: 56 simultaneous sorting jobs  
+- **Sample Management**: Dynamic sample selection from input file  
+- **Error Handling**: Comprehensive logging and email notifications  
 
 ## Best Practices
 
 ### Pre-Sorting Considerations
 
-1. **Input Validation**: Verify SAM/BAM file integrity before sorting
+1. **Input Validation**: Verify SAM/BAM file integrity (with samtools quickcheck) before sorting
 2. **Disk Space**: Ensure adequate temporary storage (3x input file size)
 3. **Memory Planning**: Allocate sufficient RAM to avoid external sorting
 4. **Backup Strategy**: Preserve original files until validation completion
@@ -208,12 +208,12 @@ picard SortSam -Xmx40G \
 
 ### Workflow Integration
 
-Sorting typically occurs between alignment and downstream analysis:
-1. **Read Alignment**: Generate initial SAM/BAM files
-2. **Quality Filtering**: Remove low-quality alignments
-3. **Sorting**: Coordinate-based organization
-4. **Indexing**: Generate access indices
-5. **Analysis**: Variant calling, coverage analysis, etc.
+Sorting typically occurs between alignment and downstream analysis:  
+1. **Read Alignment**: Generate initial SAM/BAM files  
+2. **Quality Filtering**: Remove low-quality alignments  
+3. **Sorting**: Coordinate-based organization  
+4. **Indexing**: Generate access indices  
+5. **Analysis**: Variant calling, coverage analysis, etc.  
 
 ### Automation Considerations
 
