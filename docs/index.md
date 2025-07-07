@@ -3,6 +3,10 @@
 
 This guide introduces:  
 
+## Data Organisation
+•	[Organising your data](organize-data.md)  
+•	[Start Using Git](Git.md)  
+
 ## Fastq Files Treatment
 •	[The Fastq Format](Fastq/Fastq.md)  
 •	[Renaming FASTQ Files Downloaded from the Short Read Archive](Fastq/rename-fastq.md)  

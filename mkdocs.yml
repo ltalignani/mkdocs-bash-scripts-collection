@@ -47,6 +47,8 @@ theme:
       accent: deep orange
 nav:
   - Home: index.md
+  - Organize Your Data: organize-data.md
+  - Start Using Git: Git.md
   - Fastq Files:
       - Fastq Format: Fastq/Fastq.md
       - Rename Fastq Files: Fastq/rename-fastq.md
@@ -65,7 +67,7 @@ nav:
       - Bam Quality Control: Bam/bam-qc.md
       - Variant Calling: Bam/variant-calling.md
       - GenomicsDBImport and GenotypeGVCFs: Bam/genomicsdbimport.md
-  - VCF Files: 
+  - VCF Files:
       - VCF Format: Vcf/Vcf.md
       - Filtering by Accessibility: Vcf/accessibility.md
       - Filtering by Homopolymer: Vcf/homopolymer.md
