@@ -56,6 +56,40 @@ This opens the complete manual page for the `ls` command. Manual pages are more 
 - Press `q` to quit the manual page  
 - Press `/` followed by a search term to search within the page  
 
+
+!!! question "What does `tr` command?"
+      This exercise is your first introduction to the man command. You will discover
+      a command you are not familiar with. Let's take the example of the `tr` command.  
+      1. Using the man command, explain what the `tr` command does.   
+      2. Must at least one option (short or long) be passed as an argument to the `tr` command?  
+      3. Can more than one option (short or long) be passed as an argument to the `tr` command?  
+      4. Must at least one argument be passed to the `tr` command?  
+      5. How many arguments (other than options) can be passed to the `tr` command?  
+      6. How are arguments (other than options) passed to the tr command?  
+
+
+??? abstract "Answers"
+      1. From the NAME part of the command `tr`, we learn that it is used to ‘Convert or delete characters’.  
+      2. The SYNOPSIS part of the man of the tr command contains the text below:  
+         `SYNOPSIS`
+                  `tr`  `[OPTION]`  `...`  `ENSEMBLE1`  `[ENSEMBLE2]`
+         The notation with square brackets [ ] around OPTION indicates that the argument marked OPTION is optional. It is therefore not necessary to pass an option as an argument to the `tr` command.
+      3. The three dots after `[OPTION]` indicate that you can specify more than one.
+      4. The absence of a bracket around ENSEMBLE1 indicates that this argument is necessary, so must pass at least one argument to the tr command.
+      5. `[ENSEMBLE2]` indicates that a second set can be specified, and as it is not followed by three dots, this means that a maximum of two sets can be passed as arguments to the tr command.
+      6. The `DESCRIPTION` part of the `tr` command man contains the text below:  
+         ```
+         DESCRIPTION  
+               Convert, compress and/or eliminate characters read from the standard input and write them to the standard output.
+
+               -c, -C, --complement
+                              use the complement of the ENSEMBLE1
+         (...)
+               --version
+                              Display software name and version and exit
+         ```
+
+
 ## File and Directory Operations (pwd, ls, cd, mkdir, rmdir)
 
 ### `pwd` - Print Working Directory
