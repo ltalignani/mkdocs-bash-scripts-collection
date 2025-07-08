@@ -1,6 +1,10 @@
 # Fastq Contamination Chacking With Fastq-Screen
 ![Fastq-screen logo](../assets/FQS_logo.png)
 
+<h2 class="no-toc">Table of Content</h2>
+
+[TOC]
+
 ## Overview
 
 `Fastq-screen` is a quality control tool designed to screen libraries of short reads in Fastq format against a set of reference databases. The primary purpose of this tool is to identify potential contamination sources and assess the composition of sequencing libraries by aligning reads against multiple reference genomes or databases simultaneously.

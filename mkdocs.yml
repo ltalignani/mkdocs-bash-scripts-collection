@@ -54,8 +54,10 @@ nav:
       - System Information: Basic/system-information.md
       - Networking: Basic/networking.md
       - Process Management: Basic/process-management.md
-  - Organize Your Data: organize-data.md
+  - Organise Your Data: organize-data.md
   - Start Using Git: Git.md
+  - Advanced Git: advanced-git.md
+  - CI/CD: ci-cd.md
   - Fastq Files:
       - Fastq Format: Fastq/Fastq.md
       - Rename Fastq Files: Fastq/rename-fastq.md

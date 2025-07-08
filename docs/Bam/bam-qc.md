@@ -1,5 +1,9 @@
 # BAM File Quality Control
 
+<h2 class="no-toc">Table of Content</h2>
+
+[TOC]
+
 BAM (Binary Alignment/Map) files are a key output of read mapping processes, and ensuring their integrity is crucial before proceeding to downstream analyses such as variant calling or transcript quantification. Several tools are available to perform different types of quality checks on BAM files. This section covers the most commonly used tools and strategies, along with their associated scripts in an HPC environment using SLURM.
 
 ## Quick Validation with samtools quickcheck

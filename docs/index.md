@@ -11,8 +11,10 @@ This guide introduces:
 •	[Process Management](Basic/process-management.md)  
 
 ## Data Organisation
-•	[Organising your data](organize-data.md)  
+•	[Organise your data](organize-data.md)  
 •	[Start Using Git](Git.md)  
+•	[Advanced Git](advanced-git.md)  
+•	[CI/CD](ci-cd.md)  
 
 ## Fastq Files Treatment
 •	[The Fastq Format](Fastq/Fastq.md)  

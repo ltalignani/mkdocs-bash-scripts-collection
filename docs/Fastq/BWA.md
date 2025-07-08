@@ -1,5 +1,9 @@
 # Mapping Reads to a Reference Genome with BWA: Burrows-Wheeler Aligner
 
+<h2 class="no-toc">Table of Content</h2>
+
+[TOC]
+
 ## Overview
 
 **BWA (Burrows-Wheeler Aligner)** is a fast and memory-efficient software package for aligning relatively short nucleotide sequences (*reads*) against a large reference genome, such as the human genome. It is widely used in bioinformatics pipelines for processing next-generation sequencing (NGS) data.

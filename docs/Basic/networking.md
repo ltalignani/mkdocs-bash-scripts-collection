@@ -4,7 +4,7 @@
 
 Networking is a fundamental aspect of modern computing, and the bash shell provides powerful tools for network troubleshooting, monitoring, and administration. This guide introduces essential networking commands that every system administrator and developer should know.
 
-## Table of Content
+<h2 class="no-toc">Table of Content</h2>
 
 [TOC]
 

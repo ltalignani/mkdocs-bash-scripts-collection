@@ -1,5 +1,9 @@
 # Concatenate Variants and Invariants into a Unified VCF File
 
+<h2 class="no-toc">Table of Content</h2>
+
+[TOC]
+
 After separate processing and filtering of **variant** and **invariant** genomic sites, a critical step in the variant calling pipeline is to **recombine** these data into a single VCF file per chromosome. 
 
 This step is referred to as concatenation, where two VCF files—typically from the same set of individuals but representing different sets of genomic positions (e.g., variants and invariants)—are stacked vertically, combining their records into a single file. This contrasts with a merge, which combines VCFs from different samples or individuals, aligning them by genomic position to produce a unified multisample VCF. 

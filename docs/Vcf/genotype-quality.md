@@ -1,5 +1,9 @@
 # Filtering VCF Files by Genotype Quality (GQ)
 
+<h2 class="no-toc">Table of Content</h2>
+
+[TOC]
+
 ## Genotype Quality (GQ)
 Genotype Quality (`GQ`) is a crucial metric in variant calling that estimates the confidence in the genotype assigned to a sample at a given site. GQ values are phred-scaled, meaning that higher values reflect a lower probability of genotyping errors. Filtering variants based on GQ allows for the exclusion of low-confidence genotype calls, which helps improve the reliability of downstream analyses such as population genetics or genotype-phenotype associations.
 

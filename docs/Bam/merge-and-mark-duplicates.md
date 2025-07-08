@@ -1,5 +1,9 @@
 # BAM File Merging and Duplicate Marking Workflow
 
+<h2 class="no-toc">Table of Content</h2>
+
+[TOC]
+
 ## Overview
 
 The processing of high-throughput sequencing data often involves multiple sequencing lanes or runs for a single biological sample to achieve adequate coverage depth or to distribute the sequencing load across multiple flow cells. This necessitates a systematic approach to consolidate the resulting alignment files and identify PCR duplicates that may introduce bias in downstream analyses.

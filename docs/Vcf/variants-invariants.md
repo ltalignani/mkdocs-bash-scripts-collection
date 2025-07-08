@@ -1,5 +1,9 @@
 # Variant and Invariant Site Filtering for Population Genomics
 
+<h2 class="no-toc">Table of Content</h2>
+
+[TOC]
+
 ## Overview
 
 In population genomics analyses, the accurate characterization of genetic diversity requires comprehensive assessment of both polymorphic (variant) and monomorphic (invariant) sites across the genome. Traditional variant calling pipelines focus primarily on identifying and filtering variable positions, often discarding invariant sites that are crucial for calculating accurate population genetic parameters such as nucleotide diversity (π), Tajima's D, and demographic inference statistics.

@@ -4,7 +4,7 @@
 
 Understanding your system's configuration, resources, and current state is crucial for system administration, troubleshooting, and optimization. This guide covers essential bash commands for gathering system information in Unix-like environments. These commands will help you monitor hardware, software, processes, and system performance.
 
-## Table of Content
+<h2 class="no-toc">Table of Content</h2>
 
 [TOC]
 

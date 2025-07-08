@@ -1,5 +1,9 @@
 # SAM/BAM File Sorting
 
+<h2 class="no-toc">Table of Content</h2>
+
+[TOC]
+
 ## Overview
 
 SAM/BAM file sorting is a fundamental preprocessing step in genomic analysis pipelines that organizes alignment records according to specific criteria. Proper sorting is essential for downstream applications including variant calling, coverage analysis, and visualization tools. The sorting process optimizes data access patterns and enables efficient indexing for random access operations.

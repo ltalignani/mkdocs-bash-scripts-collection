@@ -1,5 +1,9 @@
 # MarkDuplicates
 
+<h2 class="no-toc">Table of Content</h2>
+
+[TOC]
+
 ## Overview
 
 MarkDuplicates is a critical preprocessing tool in genomic analysis pipelines that identifies and manages duplicate reads in aligned sequencing data. Duplicate reads arise from various sources during library preparation and sequencing, potentially introducing bias in downstream analyses. This tool implements sophisticated algorithms to detect, mark, or remove duplicate reads while preserving the highest quality representatives, thereby improving the accuracy of variant calling and other genomic analyses.

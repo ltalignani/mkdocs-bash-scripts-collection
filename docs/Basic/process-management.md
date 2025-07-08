@@ -6,7 +6,7 @@ In UNIX-like systems, a **process** is a running instance of a program. When you
 
 This guide will teach you the essential commands and concepts for managing processes in bash, even if you've never used a UNIX environment before.
 
-## Table of Content
+<h2 class="no-toc">Table of Content</h2>
 
 [TOC]
 

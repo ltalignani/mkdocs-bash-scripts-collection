@@ -1,5 +1,9 @@
 # Trimmomatic: Quality-Based Read Trimming
 
+<h2 class="no-toc">Table of Content</h2>
+
+[TOC]
+
 ## Overview
 
 `Trimmomatic` is a comprehensive read trimming tool for Illumina NGS data that implements flexible quality-based trimming algorithms. The software performs sequence quality assessment and trimming operations through a modular pipeline architecture, enabling researchers to remove low-quality bases, adapter sequences, and other artifacts that could compromise downstream analysis accuracy.

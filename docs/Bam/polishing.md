@@ -1,5 +1,9 @@
 # Polishing of BAM Files
 
+<h2 class="no-toc">Table of Content</h2>
+
+[TOC]
+
 After mapping reads to a reference genome and marking duplicates, polishing the resulting BAM files is essential to ensure the integrity of downstream analyses. This step resolves specific errors often detected by tools such as Picard ValidateSamFile, including:  
 - **ERROR:INVALID_TAG_NM**  
 - **ERROR:MATE_NOT_FOUND**  

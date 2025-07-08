@@ -1,5 +1,9 @@
 # Genotype and Individual-Based Missing Data Filtering in VCF Files
 
+<h2 class="no-toc">Table of Content</h2>
+
+[TOC]
+
 Accurate variant analysis requires not only high-confidence genotypes but also careful handling of **missing data**. Two complementary filtering strategies are commonly applied to Variant Call Format (VCF) files to improve data quality and downstream interpretability: **site-based (horizontal) filtering** and **individual-based (vertical) filtering**.
 
 ## Horizontal Filtering: Site-Level Missing Data

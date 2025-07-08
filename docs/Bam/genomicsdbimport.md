@@ -1,5 +1,9 @@
 # GenomicsDBImport and GenotypeGVCFs in GATK4 Workflow
 
+<h2 class="no-toc">Table of Content</h2>
+
+[TOC]
+
 ## Introduction
 
 The GATK4 variant calling workflow has evolved to incorporate a two-step approach for joint genotyping across multiple samples. This methodology addresses the computational challenges of analyzing large cohorts while maintaining accuracy in variant detection. The process involves two critical steps: **GenomicsDBImport** for data consolidation and **GenotypeGVCFs** for final variant calling across all samples simultaneously.

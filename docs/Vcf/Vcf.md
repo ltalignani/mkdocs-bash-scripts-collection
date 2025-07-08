@@ -1,5 +1,9 @@
 # The VCF Format: A Comprehensive Guide
 
+<h2 class="no-toc">Table of Content</h2>
+
+[TOC]
+
 ## Introduction
 
 The Variant Call Format (VCF) is the standard file format for storing genomic variant data in bioinformatics. Originally developed by the 1000 Genomes Project, VCF has become the universal language for representing genetic variations including single nucleotide polymorphisms (SNPs), insertions and deletions (indels), and structural variants. This standardized format enables interoperability between different variant calling tools, databases, and analysis pipelines.

@@ -1,5 +1,9 @@
 # AddOrReplaceReadGroups
 
+<h2 class="no-toc">Table of Content</h2>
+
+[TOC]
+
 ## Overview
 
 The `AddOrReplaceReadGroups` tool from the Picard toolkit is a critical utility for correcting or adding read group information to existing BAM files. This tool addresses scenarios where read group metadata is missing, incomplete, or incorrectly formatted, eliminating the need to perform computationally expensive re-mapping operations. Read groups are essential metadata components that enable proper sample identification, library tracking, and downstream analysis compatibility.

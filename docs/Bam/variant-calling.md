@@ -1,5 +1,9 @@
 # Variant Calling in Genomics
 
+<h2 class="no-toc">Table of Content</h2>
+
+[TOC]
+
 ## Introduction
 
 Variant calling is a fundamental step in genomics that identifies differences between sequenced genomes and a reference genome. These differences, or variants, include single nucleotide polymorphisms (SNPs), insertions, deletions (indels), and structural variants. Accurate variant calling is crucial for understanding genetic diversity, disease susceptibility, and evolutionary relationships.

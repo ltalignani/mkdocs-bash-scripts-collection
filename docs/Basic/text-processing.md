@@ -2,7 +2,7 @@
 
 Text processing is one of the most powerful features of UNIX systems. Whether you're analyzing data files, processing log files, or manipulating configuration files, mastering text processing commands will dramatically improve your productivity. This guide covers essential tools from basic text manipulation to advanced pattern matching and data extraction.
 
-## Table of Content
+<h2 class="no-toc">Table of Content</h2>
 
 [TOC]
 

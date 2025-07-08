@@ -1,5 +1,9 @@
 # Renaming FASTQ Files Downloaded from the *Short Read Archive* (SRA)
 
+<h2 class="no-toc">Table of Content</h2>
+
+[TOC]
+
 ## Introduction to the Short Read Archive (SRA)
 
 The **Short Read Archive (SRA)** is a public repository maintained by the **National Center for Biotechnology Information** (NCBI). It is a valuable resource for researchers who wish to access and reuse sequencing datasets for comparative studies, benchmarking, or meta-analyses.  

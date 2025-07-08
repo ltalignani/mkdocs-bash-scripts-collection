@@ -1,5 +1,9 @@
 # VCF Filtering by Genomic Accessibility
 
+<h2 class="no-toc">Table of Content</h2>
+
+[TOC]
+
 ## Overview
 
 Variant Call Format (VCF) filtering by genomic accessibility is a critical quality control step in genomic analysis pipelines. This process involves restricting variant calls to regions of the genome that are reliably sequenced and assembled, thereby improving the accuracy and reliability of downstream analyses.

@@ -1,5 +1,9 @@
 # FASTQ Format
 
+<h2 class="no-toc">Table of Content</h2>
+
+[TOC]
+
 ## Overview
 
 The FASTQ format is a text-based file format widely used in bioinformatics to store nucleotide sequences along with their corresponding quality scores. Originally developed for the Sanger sequencing platform, FASTQ has become the de facto standard for representing high-throughput sequencing data from modern platforms including Illumina, Oxford Nanopore, and PacBio systems.

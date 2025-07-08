@@ -1,5 +1,9 @@
 # BAM Format Specification
 
+<h2 class="no-toc">Table of Content</h2>
+
+[TOC]
+
 ## Overview
 
 The Binary Alignment/Map (BAM) format is a compressed binary representation of the Sequence Alignment/Map (SAM) format, designed for efficient storage and retrieval of high-throughput sequencing alignment data. BAM files serve as the standard format for storing aligned sequence reads in computational genomics and bioinformatics pipelines.

@@ -1,5 +1,9 @@
 # Homopolymer Run Filtering in VCF Files
 
+<h2 class="no-toc">Table of Content</h2>
+
+[TOC]
+
 ## Context: Post-Variant Calling Quality Control
 
 This filtering step is particularly relevant in the context of post-variant calling quality control, especially when variants have been called using `legacy tools such as GATK's UnifiedGenotyper`. While modern variant callers like HaplotypeCaller incorporate sophisticated algorithms that better handle problematic genomic regions including homopolymer runs during the variant calling process, UnifiedGenotyper produces inferior results for indel calling compared to HaplotypeCaller, necessitating additional post-processing steps for homopolymer-associated variants.

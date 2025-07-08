@@ -1,5 +1,9 @@
 # Fastq Quality Control With FastQC
 
+<h2 class="no-toc">Table of Content</h2>
+
+[TOC]
+
 ## Overview
 
 FastQC is a widely-used bioinformatics tool developed by the Babraham Institute for quality control analysis of high-throughput sequencing data. It provides comprehensive statistical assessments and visual representations of sequence quality metrics, enabling researchers to identify potential issues in their sequencing datasets before downstream analysis.

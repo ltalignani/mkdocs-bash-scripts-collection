@@ -2,7 +2,7 @@
 
 Effective file management is crucial for productivity in UNIX environments. This guide will teach you advanced techniques for organizing, searching, and manipulating files using bash commands. These skills will help you handle large datasets, maintain organized project structures, and automate repetitive tasks.
 
-## Table of Contents
+<h2 class="no-toc">Table of Content</h2>
 
 [TOC]
 

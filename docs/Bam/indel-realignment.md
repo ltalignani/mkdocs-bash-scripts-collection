@@ -1,5 +1,9 @@
 # Indel Realignment Workflow (for UnifiedGenotyper Variant-caller)
 
+<h2 class="no-toc">Table of Content</h2>
+
+[TOC]
+
 ## Overview
 
 Indel realignment represents a critical preprocessing step in genomic variant calling pipelines, particularly when employing legacy tools such as GATK's `UnifiedGenotyper`. This process addresses systematic alignment artifacts that occur around insertion and deletion (indel) polymorphisms, which are prevalent in mosquito genomes and can significantly impact variant calling accuracy.

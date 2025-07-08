@@ -2,7 +2,7 @@
 
 Welcome to the world of UNIX command-line interfaces! This guide will introduce you to essential bash commands that form the foundation of working in a UNIX environment. As a Master's student, mastering these commands will significantly enhance your productivity and open up powerful possibilities for file management, data processing, and system administration.
 
-## Table of contents
+<h2 class="no-toc">Table of Content</h2>
 
 [TOC]
 
