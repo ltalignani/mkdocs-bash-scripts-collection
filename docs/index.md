@@ -3,6 +3,13 @@
 
 This guide introduces:  
 
+## Basic Bash Commands:
+•	[Basic Bash Commands](Basic/basic-bash-commands.md)  
+•	[File Management](Basic/file-management.md)  
+•	[Text Processing](Basic/text-processing.md)  
+•	[Networking](Basic/networking.md)  
+•	[Process Management](Basic/process-management.md)  
+
 ## Data Organisation
 •	[Organising your data](organize-data.md)  
 •	[Start Using Git](Git.md)  

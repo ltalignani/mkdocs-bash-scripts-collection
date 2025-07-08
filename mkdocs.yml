@@ -36,7 +36,7 @@ theme:
       toggle:
         icon: material/weather-sunny
         name: Dark mode
-      primary: indigo
+      primary: black
       accent: deep purple
     # Light Mode
     - scheme: default
@@ -47,6 +47,13 @@ theme:
       accent: deep orange
 nav:
   - Home: index.md
+  - Basic Bash Commands:
+      - Introduction: Basic/basic-bash-commands.md
+      - File Management: Basic/file-management.md
+      - Text Processing: Basic/text-processing.md
+      - System Information: Basic/system-information.md
+      - Networking: Basic/networking.md
+      - Process Management: Basic/process-management.md
   - Organize Your Data: organize-data.md
   - Start Using Git: Git.md
   - Fastq Files:
@@ -103,6 +110,9 @@ markdown_extensions:
   - admonition
   - pymdownx.details
   - def_list
+  - toc:
+      permalink: true
+      toc_depth: 2
 
 plugins:
   - search
