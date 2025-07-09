@@ -17,7 +17,7 @@ Code Push → Build → Test → Deploy → Monitor
      ↓         ↓      ↓       ↓        ↓
   GitHub   Compile  Unit   Production  Logs
   GitLab   Install  Tests  Staging     Metrics
-  Bitbucket        Integration        Alerts
+  Bitbucket        Integration         Alerts
 ```
 
 ## GitHub Actions (CI/CD Example)
@@ -118,18 +118,19 @@ jobs:
         coverage report
 ```
 
-The trigger bloc gives the instructions for when the action will be launched. The job bloc gives the following instructions: on which OS the action should be run (runs-on), and the list of steps to be run (steps).
+The trigger block defines the conditions under which the action will be executed. The job block specifies additional details, including the operating system on which the action should run (runs-on) and the sequence of tasks to be performed (steps).
 
-Don’t write your .yaml from scratch: you’ll find plenty of examples on GithHub, just adapt them to the desired workflow.
+You don’t need to write your .yaml file from scratch — numerous examples are available on GitHub. You can simply adapt one to match your specific workflow requirements.
 
-Once your .yaml is ready, and you have triggered the action (by pushing a commit, for instance), you need to navigate to get the log. Here is an example with a test-coverage action.
+Once your .yaml file is ready and the action has been triggered (for example, by pushing a commit), you can access the logs to monitor the execution. Below is an example using a test-coverage action.
 
 1. Go to the Github corresponding repository. In the Àctions`tab, select one of the workflows to display its successive runs.
 
 ![Github Actions](assets/github_actions.png)
-You can see the commits where the workflow has been run, branch, date, duration (among various information). Obviously a green check means that the workflow has entirely run without failure, whereas a red cross indicates that it has failed.
+You can view the commits where the workflow was executed, along with details such as the branch, date, duration, and other relevant information. A green check mark indicates that the workflow completed successfully without errors, while a red cross signifies that the workflow failed.
 
-2. From there, select the run you’re interested in. A summary of the action is displayed. If there are any warnings for instance, you’ll see those in the Annotations panel at the bottom. To display the workflow log let’s click on the workflow name in the central panel or in the ‘Jobs’ section (left panel). Each step outputs can be drop-downed to see the logs
+2. From there, select the run you’re interested in to access a summary of the workflow execution. If there are any warnings, they will appear in the Annotations panel at the bottom of the screen.
+To view detailed logs, click on the workflow name either in the central panel or in the Jobs section on the left. Each step can be expanded to display its corresponding output logs.
    
 ![Github Actions](assets/github_actions3.png)
 
