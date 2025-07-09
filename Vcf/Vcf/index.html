@@ -1,0 +1,2387 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://ltalignani.github.io/mkdocs-bash-scripts-collection/Vcf/Vcf/">
+      
+      
+        <link rel="prev" href="../../Bam/genomicsdbimport/">
+      
+      
+        <link rel="next" href="../accessibility/">
+      
+      
+      <link rel="icon" href="../../assets/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.15">
+    
+    
+      
+        <title>VCF Format - Bash Script Collection</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.342714a4.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../css/overrides.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="deep-purple">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#the-vcf-format-a-comprehensive-guide" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Bash Script Collection" class="md-header__button md-logo" aria-label="Bash Script Collection" data-md-component="logo">
+      
+  <img src="../../assets/logo_LT.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Bash Script Collection
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              VCF Format
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="deep-purple"  aria-label="Dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="deep-orange"  aria-label="Light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/ltalignani/mkdocs-bash-scripts-collection" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    ltalignani/bash-scripts-collection
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../Basic/basic-bash-commands/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Basic Bash Commands
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../organize-data/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Organise Your Data
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../Git/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Start Using Git
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../advanced-git/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Advanced Git
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../ci-cd/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  CI/CD
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../Fastq/Fastq/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Fastq Files
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../Bam/Bam/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Bam Files
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="./" class="md-tabs__link">
+          
+  
+  
+    
+  
+  VCF Files
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../about/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  About
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Bash Script Collection" class="md-nav__button md-logo" aria-label="Bash Script Collection" data-md-component="logo">
+      
+  <img src="../../assets/logo_LT.png" alt="logo">
+
+    </a>
+    Bash Script Collection
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/ltalignani/mkdocs-bash-scripts-collection" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    ltalignani/bash-scripts-collection
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Basic Bash Commands
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Basic Bash Commands
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Basic/basic-bash-commands/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Introduction
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Basic/file-management/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    File Management
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Basic/text-processing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Text Processing
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Basic/system-information/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    System Information
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Basic/networking/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Networking
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Basic/process-management/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Process Management
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../organize-data/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Organise Your Data
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Git/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Start Using Git
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../advanced-git/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Advanced Git
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ci-cd/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    CI/CD
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Fastq Files
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            Fastq Files
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Fastq/Fastq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Fastq Format
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Fastq/rename-fastq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Rename Fastq Files
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Fastq/FastQC/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    FastQC
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Fastq/Fastq-screen/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Fastq-screen
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Fastq/Trimming/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Trimming
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Fastq/BWA/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Mapping
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Bam Files
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            Bam Files
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Bam/Bam/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Bam Format
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Bam/sort-bam/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Sorting Bam Files
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Bam/add-or-replace-read-groups/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Add or Replace Read Groups
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Bam/mark-duplicates/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Marking Duplicates
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Bam/merge-and-mark-duplicates/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Merge and Mark Duplicates
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Bam/indel-realignment/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Indel Realignment
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Bam/polishing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Polishing Bam Files
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Bam/bam-qc/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Bam Quality Control
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Bam/variant-calling/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Variant Calling
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Bam/genomicsdbimport/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    GenomicsDBImport and GenotypeGVCFs
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    VCF Files
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_9">
+            <span class="md-nav__icon md-icon"></span>
+            VCF Files
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    VCF Format
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    VCF Format
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      Introduction
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#vcf-format-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      VCF Format Structure
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#detailed-column-specifications" class="md-nav__link">
+    <span class="md-ellipsis">
+      Detailed Column Specifications
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#genotype-representation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Genotype Representation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#variant-types-in-vcf" class="md-nav__link">
+    <span class="md-ellipsis">
+      Variant Types in VCF
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quality-metrics-and-annotations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Quality Metrics and Annotations
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#advanced-vcf-features" class="md-nav__link">
+    <span class="md-ellipsis">
+      Advanced VCF Features
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#vcf-validation-and-standards" class="md-nav__link">
+    <span class="md-ellipsis">
+      VCF Validation and Standards
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tools-and-software" class="md-nav__link">
+    <span class="md-ellipsis">
+      Tools and Software
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#best-practices" class="md-nav__link">
+    <span class="md-ellipsis">
+      Best Practices
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#emerging-developments" class="md-nav__link">
+    <span class="md-ellipsis">
+      Emerging Developments
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conclusion" class="md-nav__link">
+    <span class="md-ellipsis">
+      Conclusion
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../accessibility/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Filtering by Accessibility
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../homopolymer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Filtering by Homopolymer
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../variants-invariants/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Filtering of Variants & Invariants
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../genotype-quality/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Filtering by Genotype Quality
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../concatenate/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    VCF concatenation
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../gt-indv/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Filtering by GT and INDV
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    About
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="the-vcf-format-a-comprehensive-guide">The VCF Format: A Comprehensive Guide<a class="headerlink" href="#the-vcf-format-a-comprehensive-guide" title="Permanent link">&para;</a></h1>
+<h2 class="no-toc">Table of Content</h2>
+
+<div class="toc">
+<ul>
+<li><a href="#the-vcf-format-a-comprehensive-guide">The VCF Format: A Comprehensive Guide</a><ul>
+<li><a href="#introduction">Introduction</a></li>
+<li><a href="#vcf-format-structure">VCF Format Structure</a></li>
+<li><a href="#detailed-column-specifications">Detailed Column Specifications</a></li>
+<li><a href="#genotype-representation">Genotype Representation</a></li>
+<li><a href="#variant-types-in-vcf">Variant Types in VCF</a></li>
+<li><a href="#quality-metrics-and-annotations">Quality Metrics and Annotations</a></li>
+<li><a href="#advanced-vcf-features">Advanced VCF Features</a></li>
+<li><a href="#vcf-validation-and-standards">VCF Validation and Standards</a></li>
+<li><a href="#tools-and-software">Tools and Software</a></li>
+<li><a href="#best-practices">Best Practices</a></li>
+<li><a href="#emerging-developments">Emerging Developments</a></li>
+<li><a href="#conclusion">Conclusion</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
+<p>The Variant Call Format (VCF) is the standard file format for storing genomic variant data in bioinformatics. Originally developed by the 1000 Genomes Project, VCF has become the universal language for representing genetic variations including single nucleotide polymorphisms (SNPs), insertions and deletions (indels), and structural variants. This standardized format enables interoperability between different variant calling tools, databases, and analysis pipelines.</p>
+<p>The VCF format addresses the fundamental challenge of representing complex genomic variations in a structured, machine-readable format while maintaining human readability. Its widespread adoption across the genomics community has made it an essential component of modern genomic analysis workflows.</p>
+<h2 id="vcf-format-structure">VCF Format Structure<a class="headerlink" href="#vcf-format-structure" title="Permanent link">&para;</a></h2>
+<h3 id="file-organization">File Organization<a class="headerlink" href="#file-organization" title="Permanent link">&para;</a></h3>
+<p>VCF files are organized into two main sections:</p>
+<ol>
+<li><strong>Header section</strong>: Contains metadata about the file and data format</li>
+<li><strong>Data section</strong>: Contains the actual variant records</li>
+</ol>
+<h3 id="header-section">Header Section<a class="headerlink" href="#header-section" title="Permanent link">&para;</a></h3>
+<p>The header section begins with lines starting with <code>##</code> and contains essential metadata:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>##fileformat=VCFv4.2
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>##fileDate=20231015
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>##source=GATK4.2.6.1
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>##reference=hg38.fa
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>##contig=&lt;ID=chr1,length=248956422&gt;
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>##contig=&lt;ID=chr2,length=242193529&gt;
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>##INFO=&lt;ID=AC,Number=A,Type=Integer,Description=&quot;Allele count&quot;&gt;
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>##INFO=&lt;ID=AF,Number=A,Type=Float,Description=&quot;Allele Frequency&quot;&gt;
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>##FORMAT=&lt;ID=GT,Number=1,Type=String,Description=&quot;Genotype&quot;&gt;
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>##FORMAT=&lt;ID=DP,Number=1,Type=Integer,Description=&quot;Approximate read depth&quot;&gt;
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>#CHROM  POS ID  REF ALT QUAL    FILTER  INFO    FORMAT  Sample1 Sample2
+</span></code></pre></div>
+<h4 id="key-header-elements">Key Header Elements<a class="headerlink" href="#key-header-elements" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>fileformat</strong>: Specifies the VCF version (e.g., VCFv4.2, VCFv4.3)</li>
+<li><strong>fileDate</strong>: Date of file creation</li>
+<li><strong>source</strong>: Software used to generate the file</li>
+<li><strong>reference</strong>: Reference genome used for variant calling</li>
+<li><strong>contig</strong>: Chromosome/contig information with lengths</li>
+<li><strong>INFO</strong>: Definitions of information fields</li>
+<li><strong>FORMAT</strong>: Definitions of sample-specific format fields</li>
+</ul>
+<h3 id="data-section">Data Section<a class="headerlink" href="#data-section" title="Permanent link">&para;</a></h3>
+<p>The data section contains tab-delimited records with the following mandatory columns:</p>
+<ol>
+<li><strong>CHROM</strong>: Chromosome or contig identifier</li>
+<li><strong>POS</strong>: Position on the chromosome (1-based)</li>
+<li><strong>ID</strong>: Variant identifier (often rsID from dbSNP)</li>
+<li><strong>REF</strong>: Reference allele sequence</li>
+<li><strong>ALT</strong>: Alternative allele sequence(s)</li>
+<li><strong>QUAL</strong>: Quality score for the variant</li>
+<li><strong>FILTER</strong>: Filter status (PASS or filter codes)</li>
+<li><strong>INFO</strong>: Additional variant information</li>
+<li><strong>FORMAT</strong>: Format of sample-specific data</li>
+<li><strong>Sample columns</strong>: One column per sample with genotype data</li>
+</ol>
+<h2 id="detailed-column-specifications">Detailed Column Specifications<a class="headerlink" href="#detailed-column-specifications" title="Permanent link">&para;</a></h2>
+<h3 id="chrom-column">CHROM Column<a class="headerlink" href="#chrom-column" title="Permanent link">&para;</a></h3>
+<p>The chromosome column specifies the reference sequence identifier:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>chr1, chr2, ..., chrX, chrY, chrM
+</span></code></pre></div>
+<p><strong>Standards and conventions</strong>:
+- <strong>Human genome</strong>: Typically "chr1", "chr2", etc., or "1", "2", etc.
+- <strong>Model organisms</strong>: Species-specific naming conventions
+- <strong>Consistency</strong>: Must match reference genome contig names
+- <strong>Special chromosomes</strong>: Sex chromosomes (X, Y) and mitochondrial (M/MT)</p>
+<h3 id="pos-column">POS Column<a class="headerlink" href="#pos-column" title="Permanent link">&para;</a></h3>
+<p>Position indicates the reference coordinate of the variant:</p>
+<ul>
+<li><strong>1-based indexing</strong>: First base of chromosome is position 1</li>
+<li><strong>Reference position</strong>: For SNPs, the position of the variant base</li>
+<li><strong>Indel positioning</strong>: For insertions/deletions, the position before the first altered base</li>
+<li><strong>Coordinate system</strong>: Must be consistent with reference genome</li>
+</ul>
+<h3 id="id-column">ID Column<a class="headerlink" href="#id-column" title="Permanent link">&para;</a></h3>
+<p>Variant identifier provides database cross-references:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>rs123456789    # dbSNP identifier
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>.              # No identifier available
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>COSV123456     # COSMIC identifier
+</span></code></pre></div>
+<p><strong>Common identifier sources</strong>:
+- <strong>dbSNP</strong>: rs identifiers for known SNPs
+- <strong>COSMIC</strong>: Somatic mutation identifiers
+- <strong>ClinVar</strong>: Clinical variant identifiers
+- <strong>Custom</strong>: Project-specific identifiers</p>
+<h3 id="ref-and-alt-columns">REF and ALT Columns<a class="headerlink" href="#ref-and-alt-columns" title="Permanent link">&para;</a></h3>
+<p>Reference and alternative alleles define the variant:</p>
+<h4 id="snp-examples">SNP Examples<a class="headerlink" href="#snp-examples" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>REF: A    ALT: G     # A to G transition
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>REF: C    ALT: T     # C to T transition
+</span></code></pre></div>
+<h4 id="indel-examples">Indel Examples<a class="headerlink" href="#indel-examples" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>REF: GATC   ALT: G       # 3-base deletion
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>REF: G      ALT: GATC    # 3-base insertion
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>REF: ATG    ALT: CCC     # Complex substitution
+</span></code></pre></div>
+<h4 id="multiple-alternatives">Multiple Alternatives<a class="headerlink" href="#multiple-alternatives" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>REF: A    ALT: G,T     # Biallelic site (A→G or A→T)
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>REF: C    ALT: G,T,A   # Triallelic site
+</span></code></pre></div>
+<h3 id="qual-column">QUAL Column<a class="headerlink" href="#qual-column" title="Permanent link">&para;</a></h3>
+<p>Quality score represents confidence in the variant call:</p>
+<ul>
+<li><strong>Phred scale</strong>: -10 × log₁₀(probability of error)</li>
+<li><strong>Higher values</strong>: Greater confidence in variant call</li>
+<li><strong>Typical range</strong>: 0-1000+ (practical upper limit varies)</li>
+<li><strong>Interpretation</strong>: QUAL=30 means 99.9% confidence</li>
+</ul>
+<h3 id="filter-column">FILTER Column<a class="headerlink" href="#filter-column" title="Permanent link">&para;</a></h3>
+<p>Filter status indicates quality assessment results:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>PASS           # Variant passes all filters
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>LowQual        # Low quality variant
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>FAIL           # Failed quality filters
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>.              # No filters applied
+</span></code></pre></div>
+<p><strong>Common filter codes</strong>:
+- <strong>PASS</strong>: Variant meets all quality criteria
+- <strong>LowQual</strong>: Below quality threshold
+- <strong>LowGQ</strong>: Low genotype quality
+- <strong>LowDP</strong>: Insufficient read depth
+- <strong>StrandBias</strong>: Evidence of strand bias</p>
+<h3 id="info-column">INFO Column<a class="headerlink" href="#info-column" title="Permanent link">&para;</a></h3>
+<p>The INFO field contains semicolon-separated key-value pairs:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>AC=5;AF=0.357;AN=14;DP=255;FS=0.723;MQ=60.0;QD=25.4
+</span></code></pre></div>
+<h4 id="common-info-fields">Common INFO Fields<a class="headerlink" href="#common-info-fields" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>AC</strong>: Allele count in genotypes</li>
+<li><strong>AF</strong>: Allele frequency</li>
+<li><strong>AN</strong>: Total number of alleles in called genotypes</li>
+<li><strong>DP</strong>: Approximate read depth</li>
+<li><strong>FS</strong>: Fisher strand bias test</li>
+<li><strong>MQ</strong>: Root mean square mapping quality</li>
+<li><strong>QD</strong>: Variant confidence/quality by depth</li>
+</ul>
+<h3 id="format-column">FORMAT Column<a class="headerlink" href="#format-column" title="Permanent link">&para;</a></h3>
+<p>The FORMAT field specifies the structure of sample-specific data:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>GT:AD:DP:GQ:PL
+</span></code></pre></div>
+<h4 id="standard-format-fields">Standard FORMAT Fields<a class="headerlink" href="#standard-format-fields" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>GT</strong>: Genotype (0/0, 0/1, 1/1, etc.)</li>
+<li><strong>AD</strong>: Allelic depths for REF and ALT alleles</li>
+<li><strong>DP</strong>: Approximate read depth</li>
+<li><strong>GQ</strong>: Genotype quality</li>
+<li><strong>PL</strong>: Phred-scaled genotype likelihoods</li>
+</ul>
+<h3 id="sample-columns">Sample Columns<a class="headerlink" href="#sample-columns" title="Permanent link">&para;</a></h3>
+<p>Sample columns contain colon-separated values matching the FORMAT specification:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>Sample1: 0/1:15,12:27:99:350,0,450
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>Sample2: 1/1:2,25:27:75:750,225,0
+</span></code></pre></div>
+<h2 id="genotype-representation">Genotype Representation<a class="headerlink" href="#genotype-representation" title="Permanent link">&para;</a></h2>
+<h3 id="genotype-encoding">Genotype Encoding<a class="headerlink" href="#genotype-encoding" title="Permanent link">&para;</a></h3>
+<p>Genotypes are represented using allele indices:</p>
+<ul>
+<li><strong>0</strong>: Reference allele</li>
+<li><strong>1</strong>: First alternative allele</li>
+<li><strong>2</strong>: Second alternative allele</li>
+<li><strong>N</strong>: Nth alternative allele</li>
+</ul>
+<h4 id="diploid-examples">Diploid Examples<a class="headerlink" href="#diploid-examples" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>0/0  or  0|0    # Homozygous reference
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>0/1  or  0|1    # Heterozygous
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>1/1  or  1|1    # Homozygous alternative
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>1/2  or  1|2    # Heterozygous with two alternative alleles
+</span></code></pre></div>
+<h3 id="phasing-information">Phasing Information<a class="headerlink" href="#phasing-information" title="Permanent link">&para;</a></h3>
+<p>The separator indicates phasing status:</p>
+<ul>
+<li><strong>/</strong> (forward slash): Unphased genotype</li>
+<li><strong>|</strong> (pipe): Phased genotype</li>
+<li><strong>Phased</strong>: Alleles are ordered by parental chromosome</li>
+<li><strong>Unphased</strong>: Allele order is arbitrary</li>
+</ul>
+<h3 id="special-genotype-cases">Special Genotype Cases<a class="headerlink" href="#special-genotype-cases" title="Permanent link">&para;</a></h3>
+<h4 id="missing-data">Missing Data<a class="headerlink" href="#missing-data" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>./.  or  .|.    # Missing genotype
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>.    or  .      # Missing allele
+</span></code></pre></div>
+<h4 id="polyploid-organisms">Polyploid Organisms<a class="headerlink" href="#polyploid-organisms" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>0/0/1    # Triploid genotype
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>0/1/1/2  # Tetraploid genotype
+</span></code></pre></div>
+<h2 id="variant-types-in-vcf">Variant Types in VCF<a class="headerlink" href="#variant-types-in-vcf" title="Permanent link">&para;</a></h2>
+<h3 id="single-nucleotide-polymorphisms-snps">Single Nucleotide Polymorphisms (SNPs)<a class="headerlink" href="#single-nucleotide-polymorphisms-snps" title="Permanent link">&para;</a></h3>
+<p>SNPs are the simplest variant type:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>chr1    123456    rs123    A    G    60    PASS    AF=0.5    GT:DP:GQ    0/1:30:99
+</span></code></pre></div>
+<p><strong>Characteristics</strong>:
+- <strong>REF and ALT</strong>: Single nucleotide each
+- <strong>Position</strong>: Exact position of the variant
+- <strong>Transitions</strong>: A↔G, C↔T (more common)
+- <strong>Transversions</strong>: A↔C, A↔T, G↔C, G↔T (less common)</p>
+<h3 id="insertions-and-deletions-indels">Insertions and Deletions (Indels)<a class="headerlink" href="#insertions-and-deletions-indels" title="Permanent link">&para;</a></h3>
+<p>Indels require special representation:</p>
+<h4 id="insertion-example">Insertion Example<a class="headerlink" href="#insertion-example" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>chr1    123456    .    G    GATC    60    PASS    AF=0.3    GT:DP:GQ    0/1:25:95
+</span></code></pre></div>
+<h4 id="deletion-example">Deletion Example<a class="headerlink" href="#deletion-example" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>chr1    123456    .    GATC    G    60    PASS    AF=0.3    GT:DP:GQ    0/1:25:95
+</span></code></pre></div>
+<p><strong>Key principles</strong>:
+- <strong>Left normalization</strong>: Indels are represented at the leftmost possible position
+- <strong>Padding base</strong>: Always include at least one matching base
+- <strong>Minimal representation</strong>: Use the shortest possible representation</p>
+<h3 id="complex-variants">Complex Variants<a class="headerlink" href="#complex-variants" title="Permanent link">&para;</a></h3>
+<h4 id="multi-nucleotide-polymorphisms-mnps">Multi-nucleotide Polymorphisms (MNPs)<a class="headerlink" href="#multi-nucleotide-polymorphisms-mnps" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>chr1    123456    .    ATG    GCC    60    PASS    AF=0.2    GT:DP:GQ    0/1:28:90
+</span></code></pre></div>
+<h4 id="block-substitutions">Block Substitutions<a class="headerlink" href="#block-substitutions" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>chr1    123456    .    ATCG    GCTA    60    PASS    AF=0.1    GT:DP:GQ    0/1:32:85
+</span></code></pre></div>
+<h2 id="quality-metrics-and-annotations">Quality Metrics and Annotations<a class="headerlink" href="#quality-metrics-and-annotations" title="Permanent link">&para;</a></h2>
+<h3 id="variant-quality-assessment">Variant Quality Assessment<a class="headerlink" href="#variant-quality-assessment" title="Permanent link">&para;</a></h3>
+<h4 id="quality-score-qual">Quality Score (QUAL)<a class="headerlink" href="#quality-score-qual" title="Permanent link">&para;</a></h4>
+<p>The QUAL field provides overall confidence in the variant call:</p>
+<ul>
+<li><strong>Calculation</strong>: Based on likelihood ratios</li>
+<li><strong>Scale</strong>: Phred-scaled probability</li>
+<li><strong>Interpretation</strong>: Higher values indicate greater confidence</li>
+<li><strong>Thresholds</strong>: Project-specific quality cutoffs</li>
+</ul>
+<h4 id="genotype-quality-gq">Genotype Quality (GQ)<a class="headerlink" href="#genotype-quality-gq" title="Permanent link">&para;</a></h4>
+<p>Individual genotype confidence scores:</p>
+<ul>
+<li><strong>Per-sample metric</strong>: Confidence in assigned genotype</li>
+<li><strong>Calculation</strong>: Difference between most and second-most likely genotype</li>
+<li><strong>Range</strong>: 0-99 (capped at 99)</li>
+<li><strong>Filtering</strong>: Commonly filtered at GQ ≥ 20 or GQ ≥ 30</li>
+</ul>
+<h3 id="depth-and-coverage-metrics">Depth and Coverage Metrics<a class="headerlink" href="#depth-and-coverage-metrics" title="Permanent link">&para;</a></h3>
+<h4 id="read-depth-dp">Read Depth (DP)<a class="headerlink" href="#read-depth-dp" title="Permanent link">&para;</a></h4>
+<p>Total sequencing depth at the variant position:</p>
+<ul>
+<li><strong>Calculation</strong>: Sum of all reads covering the position</li>
+<li><strong>Filtering</strong>: Minimum and maximum depth thresholds</li>
+<li><strong>Considerations</strong>: Extremely high depth may indicate repetitive regions</li>
+</ul>
+<h4 id="allelic-depth-ad">Allelic Depth (AD)<a class="headerlink" href="#allelic-depth-ad" title="Permanent link">&para;</a></h4>
+<p>Read counts supporting each allele:</p>
+<ul>
+<li><strong>Format</strong>: Reference count, alternative count(s)</li>
+<li><strong>Example</strong>: AD=15,12 (15 reference reads, 12 alternative reads)</li>
+<li><strong>Applications</strong>: Allelic balance assessment, contamination detection</li>
+</ul>
+<h3 id="statistical-annotations">Statistical Annotations<a class="headerlink" href="#statistical-annotations" title="Permanent link">&para;</a></h3>
+<h4 id="allele-frequency-af">Allele Frequency (AF)<a class="headerlink" href="#allele-frequency-af" title="Permanent link">&para;</a></h4>
+<p>Population frequency of alternative alleles:</p>
+<ul>
+<li><strong>Calculation</strong>: AC/AN (allele count / total alleles)</li>
+<li><strong>Range</strong>: 0.0 to 1.0</li>
+<li><strong>Applications</strong>: Population genetics, filtering rare variants</li>
+</ul>
+<h4 id="hardy-weinberg-equilibrium">Hardy-Weinberg Equilibrium<a class="headerlink" href="#hardy-weinberg-equilibrium" title="Permanent link">&para;</a></h4>
+<p>Statistical test for population genetics assumptions:</p>
+<ul>
+<li><strong>HWE p-value</strong>: Probability of observing genotype frequencies</li>
+<li><strong>Deviations</strong>: May indicate population structure or technical issues</li>
+<li><strong>Filtering</strong>: Commonly filter variants with HWE p &lt; 0.001</li>
+</ul>
+<h2 id="advanced-vcf-features">Advanced VCF Features<a class="headerlink" href="#advanced-vcf-features" title="Permanent link">&para;</a></h2>
+<h3 id="structural-variants">Structural Variants<a class="headerlink" href="#structural-variants" title="Permanent link">&para;</a></h3>
+<p>Large-scale genomic rearrangements require special handling:</p>
+<h4 id="deletion">Deletion<a class="headerlink" href="#deletion" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>chr1    123456    .    N    &lt;DEL&gt;    60    PASS    SVTYPE=DEL;SVLEN=-5000;END=128456
+</span></code></pre></div>
+<h4 id="insertion">Insertion<a class="headerlink" href="#insertion" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>chr1    123456    .    N    &lt;INS&gt;    60    PASS    SVTYPE=INS;SVLEN=5000
+</span></code></pre></div>
+<h4 id="breakend-notation">Breakend Notation<a class="headerlink" href="#breakend-notation" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>chr1    123456    .    G    G]chr2:234567]    60    PASS    SVTYPE=BND
+</span></code></pre></div>
+<h3 id="symbolic-alleles">Symbolic Alleles<a class="headerlink" href="#symbolic-alleles" title="Permanent link">&para;</a></h3>
+<p>Special notation for complex variants:</p>
+<ul>
+<li><strong><DEL></strong>: Deletion</li>
+<li><strong><INS></strong>: Insertion</li>
+<li><strong><DUP></strong>: Duplication</li>
+<li><strong><CNV></strong>: Copy number variant</li>
+<li><strong><INV></strong>: Inversion</li>
+</ul>
+<h3 id="multi-sample-considerations">Multi-sample Considerations<a class="headerlink" href="#multi-sample-considerations" title="Permanent link">&para;</a></h3>
+<h4 id="population-level-information">Population-level Information<a class="headerlink" href="#population-level-information" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>##INFO=&lt;ID=AC,Number=A,Type=Integer,Description=&quot;Allele count in genotypes&quot;&gt;
+</span><span id="__span-21-2"><a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a>##INFO=&lt;ID=AF,Number=A,Type=Float,Description=&quot;Allele frequency&quot;&gt;
+</span><span id="__span-21-3"><a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a>##INFO=&lt;ID=AN,Number=1,Type=Integer,Description=&quot;Total number of alleles&quot;&gt;
+</span></code></pre></div>
+<h4 id="sample-specific-annotations">Sample-specific Annotations<a class="headerlink" href="#sample-specific-annotations" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>##FORMAT=&lt;ID=GT,Number=1,Type=String,Description=&quot;Genotype&quot;&gt;
+</span><span id="__span-22-2"><a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a>##FORMAT=&lt;ID=AD,Number=R,Type=Integer,Description=&quot;Allelic depths&quot;&gt;
+</span><span id="__span-22-3"><a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a>##FORMAT=&lt;ID=DP,Number=1,Type=Integer,Description=&quot;Approximate read depth&quot;&gt;
+</span></code></pre></div>
+<h2 id="vcf-validation-and-standards">VCF Validation and Standards<a class="headerlink" href="#vcf-validation-and-standards" title="Permanent link">&para;</a></h2>
+<h3 id="format-compliance">Format Compliance<a class="headerlink" href="#format-compliance" title="Permanent link">&para;</a></h3>
+<p>VCF files must adhere to specification standards:</p>
+<h4 id="header-validation">Header Validation<a class="headerlink" href="#header-validation" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Required fields</strong>: fileformat, contig information</li>
+<li><strong>Field definitions</strong>: All INFO and FORMAT fields must be defined</li>
+<li><strong>Consistency</strong>: Column headers must match sample names</li>
+</ul>
+<h4 id="data-validation">Data Validation<a class="headerlink" href="#data-validation" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Coordinate consistency</strong>: Positions must be valid for reference genome</li>
+<li><strong>Allele representation</strong>: REF alleles must match reference sequence</li>
+<li><strong>Format compliance</strong>: Sample data must match FORMAT specification</li>
+</ul>
+<h3 id="common-validation-issues">Common Validation Issues<a class="headerlink" href="#common-validation-issues" title="Permanent link">&para;</a></h3>
+<h4 id="coordinate-problems">Coordinate Problems<a class="headerlink" href="#coordinate-problems" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Invalid positions</strong>: Positions beyond chromosome length</li>
+<li><strong>Zero-based indexing</strong>: Accidentally using 0-based coordinates</li>
+<li><strong>Negative positions</strong>: Invalid coordinate values</li>
+</ul>
+<h4 id="allele-representation-issues">Allele Representation Issues<a class="headerlink" href="#allele-representation-issues" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Reference mismatches</strong>: REF allele doesn't match reference genome</li>
+<li><strong>Improper normalization</strong>: Indels not left-normalized</li>
+<li><strong>Missing padding</strong>: Indels without required padding bases</li>
+</ul>
+<h2 id="tools-and-software">Tools and Software<a class="headerlink" href="#tools-and-software" title="Permanent link">&para;</a></h2>
+<h3 id="vcf-manipulation-tools">VCF Manipulation Tools<a class="headerlink" href="#vcf-manipulation-tools" title="Permanent link">&para;</a></h3>
+<h4 id="vcftools">VCFtools<a class="headerlink" href="#vcftools" title="Permanent link">&para;</a></h4>
+<p>Comprehensive toolkit for VCF file manipulation:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a><span class="c1"># Basic statistics</span>
+</span><span id="__span-23-2"><a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>vcftools<span class="w"> </span>--vcf<span class="w"> </span>input.vcf<span class="w"> </span>--freq<span class="w"> </span>--out<span class="w"> </span>output
+</span><span id="__span-23-3"><a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a>
+</span><span id="__span-23-4"><a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a><span class="c1"># Filtering by quality</span>
+</span><span id="__span-23-5"><a id="__codelineno-23-5" name="__codelineno-23-5" href="#__codelineno-23-5"></a>vcftools<span class="w"> </span>--vcf<span class="w"> </span>input.vcf<span class="w"> </span>--minQ<span class="w"> </span><span class="m">30</span><span class="w"> </span>--recode<span class="w"> </span>--out<span class="w"> </span>filtered
+</span><span id="__span-23-6"><a id="__codelineno-23-6" name="__codelineno-23-6" href="#__codelineno-23-6"></a>
+</span><span id="__span-23-7"><a id="__codelineno-23-7" name="__codelineno-23-7" href="#__codelineno-23-7"></a><span class="c1"># Population genetics statistics</span>
+</span><span id="__span-23-8"><a id="__codelineno-23-8" name="__codelineno-23-8" href="#__codelineno-23-8"></a>vcftools<span class="w"> </span>--vcf<span class="w"> </span>input.vcf<span class="w"> </span>--het<span class="w"> </span>--out<span class="w"> </span>heterozygosity
+</span></code></pre></div>
+<h4 id="bcftools">BCFtools<a class="headerlink" href="#bcftools" title="Permanent link">&para;</a></h4>
+<p>High-performance VCF processing:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a><span class="c1"># Query specific regions</span>
+</span><span id="__span-24-2"><a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a>bcftools<span class="w"> </span>query<span class="w"> </span>-r<span class="w"> </span>chr1:1000000-2000000<span class="w"> </span>input.vcf.gz
+</span><span id="__span-24-3"><a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a>
+</span><span id="__span-24-4"><a id="__codelineno-24-4" name="__codelineno-24-4" href="#__codelineno-24-4"></a><span class="c1"># Merge VCF files</span>
+</span><span id="__span-24-5"><a id="__codelineno-24-5" name="__codelineno-24-5" href="#__codelineno-24-5"></a>bcftools<span class="w"> </span>merge<span class="w"> </span>file1.vcf.gz<span class="w"> </span>file2.vcf.gz<span class="w"> </span>-O<span class="w"> </span>z<span class="w"> </span>-o<span class="w"> </span>merged.vcf.gz
+</span><span id="__span-24-6"><a id="__codelineno-24-6" name="__codelineno-24-6" href="#__codelineno-24-6"></a>
+</span><span id="__span-24-7"><a id="__codelineno-24-7" name="__codelineno-24-7" href="#__codelineno-24-7"></a><span class="c1"># Convert to BCF format</span>
+</span><span id="__span-24-8"><a id="__codelineno-24-8" name="__codelineno-24-8" href="#__codelineno-24-8"></a>bcftools<span class="w"> </span>view<span class="w"> </span>input.vcf<span class="w"> </span>-O<span class="w"> </span>b<span class="w"> </span>-o<span class="w"> </span>output.bcf
+</span></code></pre></div>
+<h4 id="gatk-tools">GATK Tools<a class="headerlink" href="#gatk-tools" title="Permanent link">&para;</a></h4>
+<p>Specialized variant processing:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a><span class="c1"># Select variants</span>
+</span><span id="__span-25-2"><a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a>gatk<span class="w"> </span>SelectVariants<span class="w"> </span>-V<span class="w"> </span>input.vcf<span class="w"> </span>-O<span class="w"> </span>snps.vcf<span class="w"> </span>--select-type<span class="w"> </span>SNP
+</span><span id="__span-25-3"><a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a>
+</span><span id="__span-25-4"><a id="__codelineno-25-4" name="__codelineno-25-4" href="#__codelineno-25-4"></a><span class="c1"># Filter variants</span>
+</span><span id="__span-25-5"><a id="__codelineno-25-5" name="__codelineno-25-5" href="#__codelineno-25-5"></a>gatk<span class="w"> </span>VariantFiltration<span class="w"> </span>-V<span class="w"> </span>input.vcf<span class="w"> </span>-O<span class="w"> </span>filtered.vcf<span class="w"> </span>--filter-expression<span class="w"> </span><span class="s2">&quot;QD &lt; 2.0&quot;</span>
+</span></code></pre></div>
+<h3 id="format-conversion">Format Conversion<a class="headerlink" href="#format-conversion" title="Permanent link">&para;</a></h3>
+<h4 id="vcf-to-other-formats">VCF to Other Formats<a class="headerlink" href="#vcf-to-other-formats" title="Permanent link">&para;</a></h4>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a><span class="c1"># VCF to PLINK</span>
+</span><span id="__span-26-2"><a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a>vcftools<span class="w"> </span>--vcf<span class="w"> </span>input.vcf<span class="w"> </span>--plink<span class="w"> </span>--out<span class="w"> </span>plink_format
+</span><span id="__span-26-3"><a id="__codelineno-26-3" name="__codelineno-26-3" href="#__codelineno-26-3"></a>
+</span><span id="__span-26-4"><a id="__codelineno-26-4" name="__codelineno-26-4" href="#__codelineno-26-4"></a><span class="c1"># VCF to BED</span>
+</span><span id="__span-26-5"><a id="__codelineno-26-5" name="__codelineno-26-5" href="#__codelineno-26-5"></a>vcftools<span class="w"> </span>--vcf<span class="w"> </span>input.vcf<span class="w"> </span>--bed<span class="w"> </span>--out<span class="w"> </span>bed_format
+</span><span id="__span-26-6"><a id="__codelineno-26-6" name="__codelineno-26-6" href="#__codelineno-26-6"></a>
+</span><span id="__span-26-7"><a id="__codelineno-26-7" name="__codelineno-26-7" href="#__codelineno-26-7"></a><span class="c1"># VCF to HapMap</span>
+</span><span id="__span-26-8"><a id="__codelineno-26-8" name="__codelineno-26-8" href="#__codelineno-26-8"></a>vcftools<span class="w"> </span>--vcf<span class="w"> </span>input.vcf<span class="w"> </span>--hapmap<span class="w"> </span>--out<span class="w"> </span>hapmap_format
+</span></code></pre></div>
+<h2 id="best-practices">Best Practices<a class="headerlink" href="#best-practices" title="Permanent link">&para;</a></h2>
+<h3 id="file-organization_1">File Organization<a class="headerlink" href="#file-organization_1" title="Permanent link">&para;</a></h3>
+<h4 id="compression-and-indexing">Compression and Indexing<a class="headerlink" href="#compression-and-indexing" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Compression</strong>: Use bgzip for block compression</li>
+<li><strong>Indexing</strong>: Create tabix indices for efficient access</li>
+<li><strong>Storage</strong>: Compressed files reduce storage requirements</li>
+</ul>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a><span class="c1"># Compress and index</span>
+</span><span id="__span-27-2"><a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a>bgzip<span class="w"> </span>input.vcf
+</span><span id="__span-27-3"><a id="__codelineno-27-3" name="__codelineno-27-3" href="#__codelineno-27-3"></a>tabix<span class="w"> </span>-p<span class="w"> </span>vcf<span class="w"> </span>input.vcf.gz
+</span></code></pre></div>
+<h4 id="naming-conventions">Naming Conventions<a class="headerlink" href="#naming-conventions" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Descriptive names</strong>: Include sample information, date, and processing steps</li>
+<li><strong>Version control</strong>: Track different analysis versions</li>
+<li><strong>Documentation</strong>: Maintain metadata about file contents</li>
+</ul>
+<h3 id="quality-control">Quality Control<a class="headerlink" href="#quality-control" title="Permanent link">&para;</a></h3>
+<h4 id="pre-processing-checks">Pre-processing Checks<a class="headerlink" href="#pre-processing-checks" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Format validation</strong>: Verify VCF specification compliance</li>
+<li><strong>Reference consistency</strong>: Ensure reference genome compatibility</li>
+<li><strong>Sample integrity</strong>: Verify expected samples are present</li>
+</ul>
+<h4 id="post-processing-validation">Post-processing Validation<a class="headerlink" href="#post-processing-validation" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Variant counts</strong>: Check expected variant numbers</li>
+<li><strong>Quality distributions</strong>: Examine quality score patterns</li>
+<li><strong>Allele frequencies</strong>: Verify reasonable population genetics parameters</li>
+</ul>
+<h3 id="data-management">Data Management<a class="headerlink" href="#data-management" title="Permanent link">&para;</a></h3>
+<h4 id="backup-strategies">Backup Strategies<a class="headerlink" href="#backup-strategies" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Multiple copies</strong>: Maintain redundant copies of important files</li>
+<li><strong>Version control</strong>: Track analysis iterations</li>
+<li><strong>Documentation</strong>: Record processing steps and parameters</li>
+</ul>
+<h4 id="access-control">Access Control<a class="headerlink" href="#access-control" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Permissions</strong>: Appropriate file system permissions</li>
+<li><strong>Sharing</strong>: Secure methods for data sharing</li>
+<li><strong>Privacy</strong>: Compliance with data protection regulations</li>
+</ul>
+<h2 id="emerging-developments">Emerging Developments<a class="headerlink" href="#emerging-developments" title="Permanent link">&para;</a></h2>
+<h3 id="vcf-specification-evolution">VCF Specification Evolution<a class="headerlink" href="#vcf-specification-evolution" title="Permanent link">&para;</a></h3>
+<h4 id="recent-updates">Recent Updates<a class="headerlink" href="#recent-updates" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>VCFv4.3</strong>: Latest specification with enhanced features</li>
+<li><strong>Structural variants</strong>: Improved representation of complex variants</li>
+<li><strong>Metadata</strong>: Enhanced header information standards</li>
+</ul>
+<h4 id="future-directions">Future Directions<a class="headerlink" href="#future-directions" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Cloud integration</strong>: Improved cloud storage compatibility</li>
+<li><strong>Streaming formats</strong>: Efficient processing of large files</li>
+<li><strong>Compression</strong>: Advanced compression algorithms</li>
+</ul>
+<h3 id="integration-with-other-formats">Integration with Other Formats<a class="headerlink" href="#integration-with-other-formats" title="Permanent link">&para;</a></h3>
+<h4 id="genomic-data-standards">Genomic Data Standards<a class="headerlink" href="#genomic-data-standards" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>HGVS</strong>: Human Genome Variation Society nomenclature</li>
+<li><strong>FHIR</strong>: Fast Healthcare Interoperability Resources</li>
+<li><strong>GA4GH</strong>: Global Alliance for Genomics and Health standards</li>
+</ul>
+<h4 id="interoperability">Interoperability<a class="headerlink" href="#interoperability" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>API standards</strong>: Programmatic access to variant data</li>
+<li><strong>Cloud platforms</strong>: Integration with cloud genomics services</li>
+<li><strong>Database connectivity</strong>: Direct database import/export</li>
+</ul>
+<h2 id="conclusion">Conclusion<a class="headerlink" href="#conclusion" title="Permanent link">&para;</a></h2>
+<p>The VCF format represents a fundamental standard in genomics that enables interoperability, reproducibility, and scalability in variant analysis. Its comprehensive structure accommodates diverse variant types while maintaining computational efficiency and human readability.</p>
+<p>Understanding VCF format intricacies is essential for genomics researchers, bioinformaticians, and clinicians working with genomic variant data. Proper implementation of VCF standards ensures data quality, facilitates collaboration, and enables integration with the broader genomics ecosystem.</p>
+<p>As genomics continues to evolve toward larger datasets and more complex analyses, the VCF format will undoubtedly continue to adapt and improve, maintaining its central role in genomic data representation and exchange. Mastery of VCF format principles provides a solid foundation for current genomics work and future developments in the field.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../../Bam/genomicsdbimport/" class="md-footer__link md-footer__link--prev" aria-label="Previous: GenomicsDBImport and GenotypeGVCFs">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                GenomicsDBImport and GenotypeGVCFs
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../accessibility/" class="md-footer__link md-footer__link--next" aria-label="Next: Filtering by Accessibility">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Filtering by Accessibility
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2025 Loïc Talignani - <a href="#__consent">Change cookie settings</a>
+
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/ltalignani/" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.linkedin.com/in/loic-talignani-83a7581a2/" target="_blank" rel="noopener" title="www.linkedin.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3M135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5m282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+      <div class="md-consent" data-md-component="consent" id="__consent" hidden>
+        <div class="md-consent__overlay"></div>
+        <aside class="md-consent__inner">
+          <form class="md-consent__form md-grid md-typeset" name="consent">
+            
+
+
+
+<h4>Cookie consent</h4>
+<p>We use cookies to recognize your repeated visits and preferences, as well as to measure the effectiveness of our documentation and whether users find what they're searching for. With your consent, you're helping us to make our documentation better.</p>
+<input class="md-toggle" type="checkbox" id="__settings" >
+<div class="md-consent__settings">
+  <ul class="task-list">
+    
+    
+    
+      
+        
+  
+  
+    
+    
+  
+  <li class="task-list-item">
+    <label class="task-list-control">
+      <input type="checkbox" name="github" checked>
+      <span class="task-list-indicator"></span>
+      GitHub
+    </label>
+  </li>
+
+      
+    
+    
+      
+        
+  
+  
+    
+    
+  
+  <li class="task-list-item">
+    <label class="task-list-control">
+      <input type="checkbox" name="analytics" >
+      <span class="task-list-indicator"></span>
+      Google Analytics
+    </label>
+  </li>
+
+      
+    
+  </ul>
+</div>
+<div class="md-consent__controls">
+  
+    
+      <button class="md-button md-button--primary">Accept</button>
+    
+    
+    
+  
+    
+    
+    
+      <label class="md-button" for="__settings">Manage settings</label>
+    
+  
+    
+    
+      <button type="reset" class="md-button md-button--primary">Reject</button>
+    
+    
+  
+</div>
+          </form>
+        </aside>
+      </div>
+      <script>var consent=__md_get("__consent");if(consent)for(var input of document.forms.consent.elements)input.name&&(input.checked=consent[input.name]||!1);else"file:"!==location.protocol&&setTimeout((function(){document.querySelector("[data-md-component=consent]").hidden=!1}),250);var form=document.forms.consent;for(var action of["submit","reset"])form.addEventListener(action,(function(e){if(e.preventDefault(),"reset"===e.type)for(var n of document.forms.consent.elements)n.name&&(n.checked=!1);__md_set("__consent",Object.fromEntries(Array.from(new FormData(form).keys()).map((function(e){return[e,!0]})))),location.hash="",location.reload()}))</script>
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.indexes", "navigation.expand", "navigation.path", "navigation.top", "navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.tracking", "navigation.footer", "navigation.instant", "navigation.instant.progress", "content.code.copy", "content.code.select", "toc.integrate", "toc.follow", "search.suggest", "search.highlight", "search.share"], "search": "../../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.56ea9cef.min.js"></script>
+      
+    
+  </body>
+</html>

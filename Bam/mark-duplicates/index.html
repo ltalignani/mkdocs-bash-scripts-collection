@@ -1,0 +1,2400 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://ltalignani.github.io/mkdocs-bash-scripts-collection/Bam/mark-duplicates/">
+      
+      
+        <link rel="prev" href="../add-or-replace-read-groups/">
+      
+      
+        <link rel="next" href="../merge-and-mark-duplicates/">
+      
+      
+      <link rel="icon" href="../../assets/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.15">
+    
+    
+      
+        <title>Marking Duplicates - Bash Script Collection</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.342714a4.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../css/overrides.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="deep-purple">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#markduplicates" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Bash Script Collection" class="md-header__button md-logo" aria-label="Bash Script Collection" data-md-component="logo">
+      
+  <img src="../../assets/logo_LT.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Bash Script Collection
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Marking Duplicates
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="deep-purple"  aria-label="Dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="deep-orange"  aria-label="Light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/ltalignani/mkdocs-bash-scripts-collection" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    ltalignani/bash-scripts-collection
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../Basic/basic-bash-commands/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Basic Bash Commands
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../organize-data/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Organise Your Data
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../Git/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Start Using Git
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../advanced-git/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Advanced Git
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../ci-cd/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  CI/CD
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../Fastq/Fastq/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Fastq Files
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../Bam/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Bam Files
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../Vcf/Vcf/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  VCF Files
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../about/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  About
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Bash Script Collection" class="md-nav__button md-logo" aria-label="Bash Script Collection" data-md-component="logo">
+      
+  <img src="../../assets/logo_LT.png" alt="logo">
+
+    </a>
+    Bash Script Collection
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/ltalignani/mkdocs-bash-scripts-collection" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    ltalignani/bash-scripts-collection
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Basic Bash Commands
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Basic Bash Commands
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Basic/basic-bash-commands/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Introduction
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Basic/file-management/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    File Management
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Basic/text-processing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Text Processing
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Basic/system-information/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    System Information
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Basic/networking/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Networking
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Basic/process-management/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Process Management
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../organize-data/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Organise Your Data
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Git/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Start Using Git
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../advanced-git/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Advanced Git
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ci-cd/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    CI/CD
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Fastq Files
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            Fastq Files
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Fastq/Fastq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Fastq Format
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Fastq/rename-fastq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Rename Fastq Files
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Fastq/FastQC/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    FastQC
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Fastq/Fastq-screen/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Fastq-screen
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Fastq/Trimming/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Trimming
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Fastq/BWA/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Mapping
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Bam Files
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            Bam Files
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Bam/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Bam Format
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sort-bam/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Sorting Bam Files
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../add-or-replace-read-groups/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Add or Replace Read Groups
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Marking Duplicates
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    Marking Duplicates
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      Overview
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#biological-context-of-duplicate-reads" class="md-nav__link">
+    <span class="md-ellipsis">
+      Biological Context of Duplicate Reads
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#duplicate-detection-algorithms" class="md-nav__link">
+    <span class="md-ellipsis">
+      Duplicate Detection Algorithms
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#implementation-strategies" class="md-nav__link">
+    <span class="md-ellipsis">
+      Implementation Strategies
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tool-parameters-and-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Tool Parameters and Configuration
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#practical-implementation-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      Practical Implementation Example
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#metrics-and-quality-assessment" class="md-nav__link">
+    <span class="md-ellipsis">
+      Metrics and Quality Assessment
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#alternative-tools-and-approaches" class="md-nav__link">
+    <span class="md-ellipsis">
+      Alternative Tools and Approaches
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#integration-with-analysis-pipelines" class="md-nav__link">
+    <span class="md-ellipsis">
+      Integration with Analysis Pipelines
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#performance-optimization" class="md-nav__link">
+    <span class="md-ellipsis">
+      Performance Optimization
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#troubleshooting-common-issues" class="md-nav__link">
+    <span class="md-ellipsis">
+      Troubleshooting Common Issues
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quality-control-and-validation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Quality Control and Validation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conclusion" class="md-nav__link">
+    <span class="md-ellipsis">
+      Conclusion
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../merge-and-mark-duplicates/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Merge and Mark Duplicates
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../indel-realignment/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Indel Realignment
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../polishing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Polishing Bam Files
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../bam-qc/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Bam Quality Control
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../variant-calling/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Variant Calling
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../genomicsdbimport/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    GenomicsDBImport and GenotypeGVCFs
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    VCF Files
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_9">
+            <span class="md-nav__icon md-icon"></span>
+            VCF Files
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Vcf/Vcf/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    VCF Format
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Vcf/accessibility/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Filtering by Accessibility
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Vcf/homopolymer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Filtering by Homopolymer
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Vcf/variants-invariants/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Filtering of Variants & Invariants
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Vcf/genotype-quality/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Filtering by Genotype Quality
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Vcf/concatenate/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    VCF concatenation
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Vcf/gt-indv/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Filtering by GT and INDV
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    About
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="markduplicates">MarkDuplicates<a class="headerlink" href="#markduplicates" title="Permanent link">&para;</a></h1>
+<h2 class="no-toc">Table of Content</h2>
+
+<div class="toc">
+<ul>
+<li><a href="#markduplicates">MarkDuplicates</a><ul>
+<li><a href="#overview">Overview</a></li>
+<li><a href="#biological-context-of-duplicate-reads">Biological Context of Duplicate Reads</a></li>
+<li><a href="#duplicate-detection-algorithms">Duplicate Detection Algorithms</a></li>
+<li><a href="#implementation-strategies">Implementation Strategies</a></li>
+<li><a href="#tool-parameters-and-configuration">Tool Parameters and Configuration</a></li>
+<li><a href="#practical-implementation-example">Practical Implementation Example</a></li>
+<li><a href="#metrics-and-quality-assessment">Metrics and Quality Assessment</a></li>
+<li><a href="#alternative-tools-and-approaches">Alternative Tools and Approaches</a></li>
+<li><a href="#integration-with-analysis-pipelines">Integration with Analysis Pipelines</a></li>
+<li><a href="#performance-optimization">Performance Optimization</a></li>
+<li><a href="#troubleshooting-common-issues">Troubleshooting Common Issues</a></li>
+<li><a href="#quality-control-and-validation">Quality Control and Validation</a></li>
+<li><a href="#conclusion">Conclusion</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h2>
+<p>MarkDuplicates is a critical preprocessing tool in genomic analysis pipelines that identifies and manages duplicate reads in aligned sequencing data. Duplicate reads arise from various sources during library preparation and sequencing, potentially introducing bias in downstream analyses. This tool implements sophisticated algorithms to detect, mark, or remove duplicate reads while preserving the highest quality representatives, thereby improving the accuracy of variant calling and other genomic analyses.</p>
+<h2 id="biological-context-of-duplicate-reads">Biological Context of Duplicate Reads<a class="headerlink" href="#biological-context-of-duplicate-reads" title="Permanent link">&para;</a></h2>
+<h3 id="sources-of-duplication">Sources of Duplication<a class="headerlink" href="#sources-of-duplication" title="Permanent link">&para;</a></h3>
+<p>Duplicate reads in next-generation sequencing data originate from multiple sources:</p>
+<h4 id="pcr-duplicates">PCR Duplicates<a class="headerlink" href="#pcr-duplicates" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Library amplification</strong>: PCR steps during library preparation create identical copies</li>
+<li><strong>Cluster amplification</strong>: Bridge PCR on flow cells generates optical duplicates</li>
+<li><strong>Uneven amplification</strong>: Preferential amplification of certain DNA fragments</li>
+</ul>
+<h4 id="optical-duplicates">Optical Duplicates<a class="headerlink" href="#optical-duplicates" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Cluster misidentification</strong>: Sequencing instruments incorrectly separate adjacent clusters</li>
+<li><strong>Signal bleeding</strong>: Fluorescent signals from adjacent clusters interfere</li>
+<li><strong>Image processing artifacts</strong>: Base calling software misinterprets cluster boundaries</li>
+</ul>
+<h4 id="sequencing-artifacts">Sequencing Artifacts<a class="headerlink" href="#sequencing-artifacts" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Index hopping</strong>: Incorrect assignment of reads to samples in multiplexed runs</li>
+<li><strong>Carry-over contamination</strong>: Residual DNA from previous sequencing runs</li>
+<li><strong>Template switching</strong>: Polymerase jumping between templates during amplification</li>
+</ul>
+<h3 id="impact-on-downstream-analysis">Impact on Downstream Analysis<a class="headerlink" href="#impact-on-downstream-analysis" title="Permanent link">&para;</a></h3>
+<p>Duplicate reads can significantly affect analytical outcomes:</p>
+<h4 id="variant-calling-bias">Variant Calling Bias<a class="headerlink" href="#variant-calling-bias" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>False positive variants</strong>: Duplicates artificially inflate variant allele frequencies</li>
+<li><strong>Coverage distortion</strong>: Uneven duplicate distribution creates coverage artifacts</li>
+<li><strong>Quality score inflation</strong>: Multiple observations of the same molecule inflate confidence</li>
+</ul>
+<h4 id="population-genetics-analysis">Population Genetics Analysis<a class="headerlink" href="#population-genetics-analysis" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Allele frequency skewing</strong>: Duplicates bias population-level statistics</li>
+<li><strong>Linkage disequilibrium</strong>: Artificial correlation between nearby variants</li>
+<li><strong>Demographic inference</strong>: Incorrect population size and migration estimates</li>
+</ul>
+<h4 id="copy-number-analysis">Copy Number Analysis<a class="headerlink" href="#copy-number-analysis" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Depth-based calling</strong>: Duplicates create false copy number gains</li>
+<li><strong>Breakpoint detection</strong>: Duplicates obscure structural variant boundaries</li>
+<li><strong>Normalization issues</strong>: Uneven duplication affects read depth normalization</li>
+</ul>
+<h2 id="duplicate-detection-algorithms">Duplicate Detection Algorithms<a class="headerlink" href="#duplicate-detection-algorithms" title="Permanent link">&para;</a></h2>
+<h3 id="coordinate-based-detection">Coordinate-Based Detection<a class="headerlink" href="#coordinate-based-detection" title="Permanent link">&para;</a></h3>
+<p>The primary algorithm for duplicate identification relies on alignment coordinates:</p>
+<h4 id="single-end-reads">Single-End Reads<a class="headerlink" href="#single-end-reads" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Primary criteria</strong>: Identical 5' mapping coordinates on the same strand</li>
+<li><strong>Secondary criteria</strong>: Identical CIGAR strings for complex alignments</li>
+<li><strong>Quality assessment</strong>: Retention of highest mapping quality reads</li>
+</ul>
+<h4 id="paired-end-reads">Paired-End Reads<a class="headerlink" href="#paired-end-reads" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Template coordinates</strong>: Identical 5' coordinates for both read pairs</li>
+<li><strong>Orientation consistency</strong>: Proper pair orientation requirements</li>
+<li><strong>Insert size validation</strong>: Consistent template length measurements</li>
+</ul>
+<h3 id="sequence-based-detection">Sequence-Based Detection<a class="headerlink" href="#sequence-based-detection" title="Permanent link">&para;</a></h3>
+<p>Advanced algorithms incorporate sequence information:<br />
+- <strong>Exact sequence matching</strong>: Identical read sequences indicate duplicates<br />
+- <strong>Fuzzy matching</strong>: Sequence similarity with allowable mismatches<br />
+- <strong>Barcode integration</strong>: Unique molecular identifiers (UMIs) for accurate detection  </p>
+<h3 id="optical-duplicate-detection">Optical Duplicate Detection<a class="headerlink" href="#optical-duplicate-detection" title="Permanent link">&para;</a></h3>
+<p>Specialized algorithms for optical duplicates:<br />
+- <strong>Pixel distance calculation</strong>: Physical distance between clusters on flow cells<br />
+- <strong>Tile-based analysis</strong>: Localized duplicate detection within sequencing tiles<br />
+- <strong>Platform-specific parameters</strong>: Instrument-specific distance thresholds  </p>
+<h2 id="implementation-strategies">Implementation Strategies<a class="headerlink" href="#implementation-strategies" title="Permanent link">&para;</a></h2>
+<h3 id="marking-vs-removal">Marking vs. Removal<a class="headerlink" href="#marking-vs-removal" title="Permanent link">&para;</a></h3>
+<p>Two primary approaches for managing duplicates:</p>
+<h4 id="marking-duplicates">Marking Duplicates<a class="headerlink" href="#marking-duplicates" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>FLAG modification</strong>: Sets bit 0x400 in BAM FLAG field</li>
+<li><strong>Preservation</strong>: Maintains all reads while identifying duplicates</li>
+<li><strong>Flexibility</strong>: Allows downstream tools to handle duplicates appropriately</li>
+<li><strong>Reversibility</strong>: Enables recovery of original data if needed</li>
+</ul>
+<h4 id="removing-duplicates">Removing Duplicates<a class="headerlink" href="#removing-duplicates" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Physical removal</strong>: Eliminates duplicate reads from output files</li>
+<li><strong>Storage efficiency</strong>: Reduces file size and storage requirements</li>
+<li><strong>Processing speed</strong>: Accelerates downstream analysis by reducing data volume</li>
+<li><strong>Irreversibility</strong>: Permanent loss of duplicate read information</li>
+</ul>
+<h3 id="quality-based-selection">Quality-Based Selection<a class="headerlink" href="#quality-based-selection" title="Permanent link">&para;</a></h3>
+<p>When multiple duplicates exist, selection criteria include:<br />
+- <strong>Mapping quality</strong>: Highest MAPQ score indicates best alignment<br />
+- <strong>Base quality</strong>: Sum of base quality scores across read length<br />
+- <strong>Alignment score</strong>: Aligner-specific scoring metrics<br />
+- <strong>Read completeness</strong>: Preference for reads with fewer soft-clipped bases  </p>
+<h2 id="tool-parameters-and-configuration">Tool Parameters and Configuration<a class="headerlink" href="#tool-parameters-and-configuration" title="Permanent link">&para;</a></h2>
+<h3 id="core-parameters">Core Parameters<a class="headerlink" href="#core-parameters" title="Permanent link">&para;</a></h3>
+<p>Essential configuration options for MarkDuplicates:</p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+<th>Default</th>
+<th>Recommendation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>REMOVE_DUPLICATES</td>
+<td>Remove duplicate reads</td>
+<td>false</td>
+<td>true for storage optimization</td>
+</tr>
+<tr>
+<td>CREATE_INDEX</td>
+<td>Generate BAI index</td>
+<td>false</td>
+<td>true for downstream compatibility</td>
+</tr>
+<tr>
+<td>ASSUME_SORTED</td>
+<td>Input is coordinate sorted</td>
+<td>false</td>
+<td>true for sorted BAM files</td>
+</tr>
+<tr>
+<td>MAX_RECORDS_IN_RAM</td>
+<td>Memory buffer size</td>
+<td>500000</td>
+<td>Adjust based on available RAM</td>
+</tr>
+<tr>
+<td>TMP_DIR</td>
+<td>Temporary file directory</td>
+<td>system temp</td>
+<td>High-speed storage location</td>
+</tr>
+</tbody>
+</table>
+<h3 id="advanced-parameters">Advanced Parameters<a class="headerlink" href="#advanced-parameters" title="Permanent link">&para;</a></h3>
+<p>Specialized options for specific use cases:</p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+<th>Usage</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>OPTICAL_DUPLICATE_PIXEL_DISTANCE</td>
+<td>Optical duplicate threshold</td>
+<td>Platform-specific tuning</td>
+</tr>
+<tr>
+<td>READ_NAME_REGEX</td>
+<td>Custom read name parsing</td>
+<td>Non-standard naming schemes</td>
+</tr>
+<tr>
+<td>DUPLICATE_SCORING_STRATEGY</td>
+<td>Quality scoring method</td>
+<td>SUM_OF_BASE_QUALITIES</td>
+</tr>
+<tr>
+<td>CLEAR_DT</td>
+<td>Remove existing duplicate tags</td>
+<td>Reprocessing scenarios</td>
+</tr>
+<tr>
+<td>ADD_PG_TAG_TO_READS</td>
+<td>Add program group tags</td>
+<td>Pipeline tracking</td>
+</tr>
+</tbody>
+</table>
+<h3 id="memory-management">Memory Management<a class="headerlink" href="#memory-management" title="Permanent link">&para;</a></h3>
+<p>Optimal memory configuration strategies:<br />
+- <strong>Heap allocation</strong>: 1-2 GB per million reads as baseline<br />
+- <strong>Buffer sizing</strong>: Balance memory usage with I/O efficiency<br />
+- <strong>Garbage collection</strong>: Tune JVM parameters for sustained performance<br />
+- <strong>Temporary storage</strong>: Ensure adequate disk space for intermediate files  </p>
+<h2 id="practical-implementation-example">Practical Implementation Example<a class="headerlink" href="#practical-implementation-example" title="Permanent link">&para;</a></h2>
+<p>The following example demonstrates production-ready duplicate marking using SLURM job scheduling:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="ch">#!/bin/bash</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="c1">###################configuration slurm##############################</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="c1">#SBATCH -A invalbo</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="c1">#SBATCH --time=2-23:00:00</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="c1">#SBATCH --job-name=mark_bams</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="c1">#SBATCH -p long</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="c1">#SBATCH --nodes=1</span>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="c1">#SBATCH --ntasks=1</span>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="c1">#SBATCH --cpus-per-task=2</span>
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="c1">#SBATCH --mem=128G</span>
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="c1">#SBATCH --array=1-56</span>
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="c1">#SBATCH --output=Cluster_logs/%x-%j-%N.out</span>
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="c1">#SBATCH --error=Cluster_logs/%x-%j-%N.err</span>
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="c1">#SBATCH --mail-user=loic.talignani@ird.fr</span>
+</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="c1">#SBATCH --mail-type=FAIL</span>
+</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="c1">####################################################################</span>
+</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>
+</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="c1"># Extract BAM filename from job array list</span>
+</span><span id="__span-0-19"><a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a><span class="nv">BAMNAME</span><span class="o">=</span><span class="k">$(</span>sed<span class="w"> </span>-n<span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">SLURM_ARRAY_TASK_ID</span><span class="si">}</span><span class="s2">p&quot;</span><span class="w"> </span>info_files/bam_list<span class="k">)</span>
+</span><span id="__span-0-20"><a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>
+</span><span id="__span-0-21"><a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a><span class="c1"># Define output directory structure</span>
+</span><span id="__span-0-22"><a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a><span class="nv">OUTPUT_DIR</span><span class="o">=</span>results/04_Polishing
+</span><span id="__span-0-23"><a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a>mkdir<span class="w"> </span>-p<span class="w"> </span><span class="si">${</span><span class="nv">OUTPUT_DIR</span><span class="si">}</span>
+</span><span id="__span-0-24"><a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a>
+</span><span id="__span-0-25"><a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a><span class="c1"># Define output file path</span>
+</span><span id="__span-0-26"><a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a><span class="nv">MARKED_BAM</span><span class="o">=</span><span class="si">${</span><span class="nv">OUTPUT_DIR</span><span class="si">}</span>/<span class="si">${</span><span class="nv">BAMNAME</span><span class="si">}</span>_marked.bam
+</span><span id="__span-0-27"><a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a>
+</span><span id="__span-0-28"><a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a><span class="c1"># Create quality control directory</span>
+</span><span id="__span-0-29"><a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a><span class="nv">METRICS_DIR</span><span class="o">=</span><span class="s2">&quot;qc/markdup&quot;</span>
+</span><span id="__span-0-30"><a id="__codelineno-0-30" name="__codelineno-0-30" href="#__codelineno-0-30"></a>mkdir<span class="w"> </span>-p<span class="w"> </span><span class="si">${</span><span class="nv">METRICS_DIR</span><span class="si">}</span>
+</span><span id="__span-0-31"><a id="__codelineno-0-31" name="__codelineno-0-31" href="#__codelineno-0-31"></a>
+</span><span id="__span-0-32"><a id="__codelineno-0-32" name="__codelineno-0-32" href="#__codelineno-0-32"></a><span class="c1"># Create reporting directory</span>
+</span><span id="__span-0-33"><a id="__codelineno-0-33" name="__codelineno-0-33" href="#__codelineno-0-33"></a><span class="nv">REPORT_DIR</span><span class="o">=</span>results/11_Reports/markduplicates
+</span><span id="__span-0-34"><a id="__codelineno-0-34" name="__codelineno-0-34" href="#__codelineno-0-34"></a>mkdir<span class="w"> </span>-p<span class="w"> </span><span class="si">${</span><span class="nv">REPORT_DIR</span><span class="si">}</span>
+</span><span id="__span-0-35"><a id="__codelineno-0-35" name="__codelineno-0-35" href="#__codelineno-0-35"></a>
+</span><span id="__span-0-36"><a id="__codelineno-0-36" name="__codelineno-0-36" href="#__codelineno-0-36"></a><span class="c1"># Load required software module</span>
+</span><span id="__span-0-37"><a id="__codelineno-0-37" name="__codelineno-0-37" href="#__codelineno-0-37"></a>module<span class="w"> </span>load<span class="w"> </span>picard/2.23.5
+</span><span id="__span-0-38"><a id="__codelineno-0-38" name="__codelineno-0-38" href="#__codelineno-0-38"></a>
+</span><span id="__span-0-39"><a id="__codelineno-0-39" name="__codelineno-0-39" href="#__codelineno-0-39"></a><span class="c1"># Execute duplicate marking with removal</span>
+</span><span id="__span-0-40"><a id="__codelineno-0-40" name="__codelineno-0-40" href="#__codelineno-0-40"></a>picard<span class="w"> </span>MarkDuplicates<span class="w"> </span>-Xmx128000m<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-0-41"><a id="__codelineno-0-41" name="__codelineno-0-41" href="#__codelineno-0-41"></a><span class="w">  </span>--REMOVE_DUPLICATES<span class="w"> </span><span class="nb">true</span><span class="w"> </span>--CREATE_INDEX<span class="w"> </span><span class="nb">true</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-0-42"><a id="__codelineno-0-42" name="__codelineno-0-42" href="#__codelineno-0-42"></a><span class="w">  </span>--INPUT<span class="w"> </span>results/02_Mapping/<span class="si">${</span><span class="nv">BAMNAME</span><span class="si">}</span>_sorted.bam<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-0-43"><a id="__codelineno-0-43" name="__codelineno-0-43" href="#__codelineno-0-43"></a><span class="w">  </span>--OUTPUT<span class="w"> </span><span class="si">${</span><span class="nv">MARKED_BAM</span><span class="si">}</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-0-44"><a id="__codelineno-0-44" name="__codelineno-0-44" href="#__codelineno-0-44"></a><span class="w">  </span>--TMP_DIR<span class="w"> </span>/tmp/<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-0-45"><a id="__codelineno-0-45" name="__codelineno-0-45" href="#__codelineno-0-45"></a><span class="w">  </span>--METRICS_FILE<span class="w"> </span><span class="si">${</span><span class="nv">METRICS_DIR</span><span class="si">}</span>/<span class="si">${</span><span class="nv">BAMNAME</span><span class="si">}</span>.metrics<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-0-46"><a id="__codelineno-0-46" name="__codelineno-0-46" href="#__codelineno-0-46"></a><span class="w">  </span><span class="p">&amp;</span>&gt;<span class="w"> </span><span class="si">${</span><span class="nv">REPORT_DIR</span><span class="si">}</span>/<span class="si">${</span><span class="nv">BAMNAME</span><span class="si">}</span>_marked.out
+</span></code></pre></div>
+<h3 id="script-analysis">Script Analysis<a class="headerlink" href="#script-analysis" title="Permanent link">&para;</a></h3>
+<p><strong>Resource Allocation:</strong><br />
+- <strong>Memory</strong>: 128 GB allocation for processing large BAM files<br />
+- <strong>CPU</strong>: 2 cores for I/O intensive operations<br />
+- <strong>Time</strong>: Extended processing window for comprehensive datasets<br />
+- <strong>Array processing</strong>: 56 parallel jobs for batch processing  </p>
+<p><strong>File Management:</strong><br />
+- <strong>Input validation</strong>: Systematic processing of BAM file lists<br />
+- <strong>Directory structure</strong>: Organized output and quality control directories<br />
+- <strong>Temporary storage</strong>: Efficient use of local temporary directories  </p>
+<p><strong>Quality Control Integration:</strong><br />
+- <strong>Metrics collection</strong>: Comprehensive duplicate statistics generation<br />
+- <strong>Reporting</strong>: Detailed logging for process monitoring<br />
+- <strong>Indexing</strong>: Automatic BAI index creation for downstream compatibility  </p>
+<p><strong>Processing Configuration:</strong><br />
+- <strong>Duplicate removal</strong>: Physical elimination of duplicate reads<br />
+- <strong>Index creation</strong>: Automatic generation of BAM indices<br />
+- <strong>Memory optimization</strong>: Efficient memory allocation for large datasets  </p>
+<h2 id="metrics-and-quality-assessment">Metrics and Quality Assessment<a class="headerlink" href="#metrics-and-quality-assessment" title="Permanent link">&para;</a></h2>
+<h3 id="duplicate-statistics">Duplicate Statistics<a class="headerlink" href="#duplicate-statistics" title="Permanent link">&para;</a></h3>
+<p>MarkDuplicates generates comprehensive metrics including:</p>
+<h4 id="library-level-metrics">Library-Level Metrics<a class="headerlink" href="#library-level-metrics" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Total reads</strong>: Complete read count in input file  </li>
+<li><strong>Duplicate reads</strong>: Number of identified duplicates  </li>
+<li><strong>Duplication rate</strong>: Percentage of reads identified as duplicates  </li>
+<li><strong>Optical duplicate rate</strong>: Percentage of optically duplicated reads  </li>
+</ul>
+<h4 id="molecular-metrics">Molecular Metrics<a class="headerlink" href="#molecular-metrics" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Unique molecules</strong>: Estimated number of distinct DNA molecules  </li>
+<li><strong>Molecules with duplicates</strong>: Count of molecules generating duplicates  </li>
+<li><strong>Mean reads per molecule</strong>: Average amplification rate  </li>
+</ul>
+<h4 id="quality-metrics">Quality Metrics<a class="headerlink" href="#quality-metrics" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Mapping quality distribution</strong>: Quality scores of retained vs. duplicate reads  </li>
+<li><strong>Insert size distribution</strong>: Template length statistics for paired-end reads  </li>
+<li><strong>Duplicate class distribution</strong>: Breakdown by duplicate type  </li>
+</ul>
+<h3 id="interpretation-guidelines">Interpretation Guidelines<a class="headerlink" href="#interpretation-guidelines" title="Permanent link">&para;</a></h3>
+<h4 id="acceptable-duplication-rates">Acceptable Duplication Rates<a class="headerlink" href="#acceptable-duplication-rates" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Whole genome sequencing</strong>: 5-15% typical for well-prepared libraries  </li>
+<li><strong>Exome sequencing</strong>: 10-25% due to target enrichment bias  </li>
+<li><strong>RNA sequencing</strong>: 20-50% depending on library complexity  </li>
+<li><strong>Amplicon sequencing</strong>: 30-70% expected for targeted approaches  </li>
+</ul>
+<h4 id="quality-indicators">Quality Indicators<a class="headerlink" href="#quality-indicators" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Low optical duplicates</strong>: &lt;5% indicates proper cluster density  </li>
+<li><strong>Consistent across lanes</strong>: Similar rates suggest uniform processing  </li>
+<li><strong>Insert size distribution</strong>: Proper library size selection  </li>
+<li><strong>Mapping quality retention</strong>: High-quality reads preferentially retained  </li>
+</ul>
+<h2 id="alternative-tools-and-approaches">Alternative Tools and Approaches<a class="headerlink" href="#alternative-tools-and-approaches" title="Permanent link">&para;</a></h2>
+<h3 id="samtools-implementations">SAMtools Implementations<a class="headerlink" href="#samtools-implementations" title="Permanent link">&para;</a></h3>
+<p>Basic duplicate marking capabilities:
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># Mark duplicates using SAMtools</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>samtools<span class="w"> </span>markdup<span class="w"> </span>input_sorted.bam<span class="w"> </span>output_marked.bam
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="c1"># Remove duplicates using SAMtools</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>samtools<span class="w"> </span>markdup<span class="w"> </span>-r<span class="w"> </span>input_sorted.bam<span class="w"> </span>output_deduped.bam
+</span></code></pre></div></p>
+<h3 id="specialized-tools">Specialized Tools<a class="headerlink" href="#specialized-tools" title="Permanent link">&para;</a></h3>
+<h4 id="umi-based-deduplication">UMI-Based Deduplication<a class="headerlink" href="#umi-based-deduplication" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>UMI-tools</strong>: Handles unique molecular identifiers  </li>
+<li><strong>Picard MarkDuplicates with UMI</strong>: Enhanced UMI support  </li>
+<li><strong>Custom solutions</strong>: Laboratory-specific UMI strategies  </li>
+</ul>
+<h4 id="high-performance-implementations">High-Performance Implementations<a class="headerlink" href="#high-performance-implementations" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Sambamba</strong>: Parallelized duplicate marking  </li>
+<li><strong>Biobambam2</strong>: Optimized for large-scale processing  </li>
+<li><strong>Custom implementations</strong>: Specialized for specific sequencing platforms  </li>
+</ul>
+<h3 id="cloud-based-solutions">Cloud-Based Solutions<a class="headerlink" href="#cloud-based-solutions" title="Permanent link">&para;</a></h3>
+<p>Modern genomics platforms offer managed duplicate detection:<br />
+- <strong>Google Cloud Genomics</strong>: Integrated duplicate marking<br />
+- <strong>AWS Genomics</strong>: Scalable duplicate detection<br />
+- <strong>Azure Genomics</strong>: Cloud-native processing pipelines  </p>
+<h2 id="integration-with-analysis-pipelines">Integration with Analysis Pipelines<a class="headerlink" href="#integration-with-analysis-pipelines" title="Permanent link">&para;</a></h2>
+<h3 id="workflow-positioning">Workflow Positioning<a class="headerlink" href="#workflow-positioning" title="Permanent link">&para;</a></h3>
+<p>Duplicate marking typically occurs after sorting and before variant calling:  </p>
+<ol>
+<li><strong>Raw sequencing data</strong>: FASTQ files from sequencing platforms  </li>
+<li><strong>Quality control</strong>: Adapter trimming and quality filtering  </li>
+<li><strong>Read alignment</strong>: Mapping to reference genome  </li>
+<li><strong>Coordinate sorting</strong>: Organization by genomic position  </li>
+<li><strong>Read group assignment</strong>: Metadata correction and standardization  </li>
+<li><strong>Duplicate marking</strong>: Identification and management ← <em>Current process</em>  </li>
+<li><strong>Base quality recalibration</strong>: Systematic error correction  </li>
+<li><strong>Variant calling</strong>: Genomic variant identification  </li>
+<li><strong>Variant filtering</strong>: Quality-based variant selection  </li>
+</ol>
+<h3 id="downstream-compatibility">Downstream Compatibility<a class="headerlink" href="#downstream-compatibility" title="Permanent link">&para;</a></h3>
+<p>Proper duplicate handling ensures compatibility with:<br />
+- <strong>GATK Best Practices</strong>: Standard genomics pipeline requirements<br />
+- <strong>Variant callers</strong>: Accurate allele frequency estimation<br />
+- <strong>Population genetics tools</strong>: Unbiased allele frequency calculations<br />
+- <strong>Structural variant detection</strong>: Accurate breakpoint identification  </p>
+<h2 id="performance-optimization">Performance Optimization<a class="headerlink" href="#performance-optimization" title="Permanent link">&para;</a></h2>
+<h3 id="computational-strategies">Computational Strategies<a class="headerlink" href="#computational-strategies" title="Permanent link">&para;</a></h3>
+<h4 id="memory-optimization">Memory Optimization<a class="headerlink" href="#memory-optimization" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Heap tuning</strong>: Optimal JVM memory allocation  </li>
+<li><strong>Buffer management</strong>: Efficient I/O buffer sizing  </li>
+<li><strong>Garbage collection</strong>: Appropriate GC strategy selection  </li>
+</ul>
+<h4 id="io-optimization">I/O Optimization<a class="headerlink" href="#io-optimization" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Temporary storage</strong>: High-speed storage for intermediate files  </li>
+<li><strong>Parallel processing</strong>: Multi-threaded duplicate detection  </li>
+<li><strong>Streaming algorithms</strong>: Reduced memory footprint for large files  </li>
+</ul>
+<h4 id="scalability-considerations">Scalability Considerations<a class="headerlink" href="#scalability-considerations" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Distributed computing</strong>: Cluster-based processing for large datasets  </li>
+<li><strong>Cloud deployment</strong>: Elastic scaling based on workload  </li>
+<li><strong>Resource monitoring</strong>: Real-time performance tracking  </li>
+</ul>
+<h3 id="best-practices">Best Practices<a class="headerlink" href="#best-practices" title="Permanent link">&para;</a></h3>
+<h4 id="pre-processing-optimization">Pre-Processing Optimization<a class="headerlink" href="#pre-processing-optimization" title="Permanent link">&para;</a></h4>
+<ol>
+<li><strong>Coordinate sorting</strong>: Ensure proper BAM file sorting  </li>
+<li><strong>Read group validation</strong>: Verify proper read group assignment  </li>
+<li><strong>File integrity</strong>: Validate BAM file completeness  </li>
+<li><strong>Resource planning</strong>: Estimate computational requirements  </li>
+</ol>
+<h4 id="processing-optimization">Processing Optimization<a class="headerlink" href="#processing-optimization" title="Permanent link">&para;</a></h4>
+<ol>
+<li><strong>Memory allocation</strong>: Size heap based on input file characteristics  </li>
+<li><strong>Temporary storage</strong>: Use local, high-speed storage  </li>
+<li><strong>Parallel execution</strong>: Utilize job arrays for batch processing  </li>
+<li><strong>Error handling</strong>: Implement robust error detection and recovery  </li>
+</ol>
+<h4 id="post-processing-validation">Post-Processing Validation<a class="headerlink" href="#post-processing-validation" title="Permanent link">&para;</a></h4>
+<ol>
+<li><strong>Metrics review</strong>: Analyze duplicate statistics for quality assessment  </li>
+<li><strong>File validation</strong>: Verify output file integrity  </li>
+<li><strong>Index generation</strong>: Ensure proper BAM indexing  </li>
+<li><strong>Downstream testing</strong>: Validate compatibility with analysis tools  </li>
+</ol>
+<h2 id="troubleshooting-common-issues">Troubleshooting Common Issues<a class="headerlink" href="#troubleshooting-common-issues" title="Permanent link">&para;</a></h2>
+<h3 id="memory-related-problems">Memory-Related Problems<a class="headerlink" href="#memory-related-problems" title="Permanent link">&para;</a></h3>
+<h4 id="outofmemoryerror">OutOfMemoryError<a class="headerlink" href="#outofmemoryerror" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Symptoms</strong>: JVM heap space exhaustion during processing  </li>
+<li><strong>Solutions</strong>: Increase heap size, reduce records in RAM, optimize GC  </li>
+<li><strong>Prevention</strong>: Estimate memory requirements based on file size  </li>
+</ul>
+<h4 id="system-memory-exhaustion">System Memory Exhaustion<a class="headerlink" href="#system-memory-exhaustion" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Symptoms</strong>: System becomes unresponsive during processing  </li>
+<li><strong>Solutions</strong>: Reduce concurrent jobs, optimize memory allocation  </li>
+<li><strong>Prevention</strong>: Monitor system memory usage patterns  </li>
+</ul>
+<h3 id="performance-issues">Performance Issues<a class="headerlink" href="#performance-issues" title="Permanent link">&para;</a></h3>
+<h4 id="slow-processing">Slow Processing<a class="headerlink" href="#slow-processing" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Causes</strong>: Inadequate memory, slow storage, inefficient parameters  </li>
+<li><strong>Solutions</strong>: Optimize memory allocation, use faster storage, tune parameters  </li>
+<li><strong>Monitoring</strong>: Track processing rates and resource utilization  </li>
+</ul>
+<h4 id="io-bottlenecks">I/O Bottlenecks<a class="headerlink" href="#io-bottlenecks" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Causes</strong>: Network storage, insufficient disk bandwidth  </li>
+<li><strong>Solutions</strong>: Use local storage, optimize I/O patterns  </li>
+<li><strong>Prevention</strong>: Benchmark storage performance before processing  </li>
+</ul>
+<h3 id="data-integrity-issues">Data Integrity Issues<a class="headerlink" href="#data-integrity-issues" title="Permanent link">&para;</a></h3>
+<h4 id="incomplete-processing">Incomplete Processing<a class="headerlink" href="#incomplete-processing" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Symptoms</strong>: Truncated output files, missing indices  </li>
+<li><strong>Solutions</strong>: Verify input file integrity, check disk space  </li>
+<li><strong>Prevention</strong>: Implement comprehensive error checking  </li>
+</ul>
+<h4 id="metrics-inconsistencies">Metrics Inconsistencies<a class="headerlink" href="#metrics-inconsistencies" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Symptoms</strong>: Unexpected duplication rates, anomalous statistics  </li>
+<li><strong>Solutions</strong>: Validate input data quality, review processing parameters  </li>
+<li><strong>Prevention</strong>: Establish quality control thresholds  </li>
+</ul>
+<h2 id="quality-control-and-validation">Quality Control and Validation<a class="headerlink" href="#quality-control-and-validation" title="Permanent link">&para;</a></h2>
+<h3 id="pre-processing-checks">Pre-Processing Checks<a class="headerlink" href="#pre-processing-checks" title="Permanent link">&para;</a></h3>
+<p>Essential validation steps before duplicate marking:<br />
+1. <strong>File integrity</strong>: Verify BAM file completeness and accessibility<br />
+2. <strong>Sort order</strong>: Confirm coordinate-based sorting<br />
+3. <strong>Read groups</strong>: Validate proper read group assignment<br />
+4. <strong>Sample consistency</strong>: Verify sample identification accuracy  </p>
+<h3 id="processing-monitoring">Processing Monitoring<a class="headerlink" href="#processing-monitoring" title="Permanent link">&para;</a></h3>
+<p>Real-time monitoring during duplicate marking:<br />
+1. <strong>Resource utilization</strong>: Track memory, CPU, and I/O usage<br />
+2. <strong>Progress tracking</strong>: Monitor processing completion rates<br />
+3. <strong>Error detection</strong>: Identify processing failures early<br />
+4. <strong>Quality metrics</strong>: Review duplicate statistics during processing  </p>
+<h3 id="post-processing-validation_1">Post-Processing Validation<a class="headerlink" href="#post-processing-validation_1" title="Permanent link">&para;</a></h3>
+<p>Comprehensive validation after duplicate marking:<br />
+1. <strong>Output integrity</strong>: Verify complete file generation<br />
+2. <strong>Metrics analysis</strong>: Review duplicate statistics for anomalies<br />
+3. <strong>Indexing verification</strong>: Confirm proper BAM index generation<br />
+4. <strong>Downstream compatibility</strong>: Test with analysis tools  </p>
+<h2 id="conclusion">Conclusion<a class="headerlink" href="#conclusion" title="Permanent link">&para;</a></h2>
+<p>MarkDuplicates represents a fundamental component of modern genomic analysis pipelines, providing essential functionality for managing duplicate reads that can significantly impact analytical accuracy. Proper implementation requires careful consideration of computational resources, algorithm selection, and quality control measures. The tool's integration into automated pipelines enables scalable processing of large-scale genomic datasets while maintaining data integrity and analytical reliability. Understanding the biological sources of duplication, implementing appropriate detection strategies, and maintaining rigorous quality control standards are essential for generating high-quality genomic datasets suitable for downstream analysis and clinical applications.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../add-or-replace-read-groups/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Add or Replace Read Groups">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Add or Replace Read Groups
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../merge-and-mark-duplicates/" class="md-footer__link md-footer__link--next" aria-label="Next: Merge and Mark Duplicates">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Merge and Mark Duplicates
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2025 Loïc Talignani - <a href="#__consent">Change cookie settings</a>
+
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/ltalignani/" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.linkedin.com/in/loic-talignani-83a7581a2/" target="_blank" rel="noopener" title="www.linkedin.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3M135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5m282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+      <div class="md-consent" data-md-component="consent" id="__consent" hidden>
+        <div class="md-consent__overlay"></div>
+        <aside class="md-consent__inner">
+          <form class="md-consent__form md-grid md-typeset" name="consent">
+            
+
+
+
+<h4>Cookie consent</h4>
+<p>We use cookies to recognize your repeated visits and preferences, as well as to measure the effectiveness of our documentation and whether users find what they're searching for. With your consent, you're helping us to make our documentation better.</p>
+<input class="md-toggle" type="checkbox" id="__settings" >
+<div class="md-consent__settings">
+  <ul class="task-list">
+    
+    
+    
+      
+        
+  
+  
+    
+    
+  
+  <li class="task-list-item">
+    <label class="task-list-control">
+      <input type="checkbox" name="github" checked>
+      <span class="task-list-indicator"></span>
+      GitHub
+    </label>
+  </li>
+
+      
+    
+    
+      
+        
+  
+  
+    
+    
+  
+  <li class="task-list-item">
+    <label class="task-list-control">
+      <input type="checkbox" name="analytics" >
+      <span class="task-list-indicator"></span>
+      Google Analytics
+    </label>
+  </li>
+
+      
+    
+  </ul>
+</div>
+<div class="md-consent__controls">
+  
+    
+      <button class="md-button md-button--primary">Accept</button>
+    
+    
+    
+  
+    
+    
+    
+      <label class="md-button" for="__settings">Manage settings</label>
+    
+  
+    
+    
+      <button type="reset" class="md-button md-button--primary">Reject</button>
+    
+    
+  
+</div>
+          </form>
+        </aside>
+      </div>
+      <script>var consent=__md_get("__consent");if(consent)for(var input of document.forms.consent.elements)input.name&&(input.checked=consent[input.name]||!1);else"file:"!==location.protocol&&setTimeout((function(){document.querySelector("[data-md-component=consent]").hidden=!1}),250);var form=document.forms.consent;for(var action of["submit","reset"])form.addEventListener(action,(function(e){if(e.preventDefault(),"reset"===e.type)for(var n of document.forms.consent.elements)n.name&&(n.checked=!1);__md_set("__consent",Object.fromEntries(Array.from(new FormData(form).keys()).map((function(e){return[e,!0]})))),location.hash="",location.reload()}))</script>
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.indexes", "navigation.expand", "navigation.path", "navigation.top", "navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.tracking", "navigation.footer", "navigation.instant", "navigation.instant.progress", "content.code.copy", "content.code.select", "toc.integrate", "toc.follow", "search.suggest", "search.highlight", "search.share"], "search": "../../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.56ea9cef.min.js"></script>
+      
+    
+  </body>
+</html>
