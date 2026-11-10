@@ -1,0 +1,47 @@
+.md-typeset p code {
+    color: #d14;
+    background-color: transparent;
+    font-weight: 600;
+    padding: 0 4px;
+    border-radius: 3px; }
+
+figure {
+    text-align: center;
+    margin: 2em 0;
+  }
+  
+  figcaption {
+    font-style: italic;
+    color: var(--md-default-fg-color--light);
+    margin-top: 0.5em;
+    font-size: 0.9em;
+  }
+  
+  /* Pour les images avec légendes simples */
+  img + em {
+    display: block;
+    text-align: center;
+    font-style: italic;
+    margin-top: 0.5em;
+    color: var(--md-default-fg-color--light);
+}
+
+.image-row {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin: 20px 0;
+    flex-wrap: wrap;
+}
+
+.image-item {
+    text-align: center;
+    flex: 1;
+    max-width: 200px;
+}
+
+.image-item img {
+    width: 80px;
+    height: auto;
+    display: block;
+    margin: 0 auto; }
